@@ -23,11 +23,25 @@ public class Enemy {
 	PointF direction;
 	Rect rectangle;
 	Image image;
-	int margin=5,health =10,colour=255;
+	int margin=5,health =10,colour=255,pathType,delayTimer,enemyType,currentWaypoint=0;
 	public Enemy()
 	{
 		image = Assets.menu;
 		rectangle = new Rect(500,300,500+image.getWidth(),300+image.getHeight());
+	}
+	public Enemy(int path,int delay, int enemy,int x, int y)
+	{
+		pathType = path;
+		delayTimer=delay;
+		enemyType = enemy;
+		position=new PointF(x,y);
+		prevPos=new PointF(x, y);
+		offSet = new PointF(x,y);
+		offSet2 =new PointF(0,0);
+		speed = 2;
+		image = Assets.menu;
+		rectangle = new Rect(x-margin,y-margin,x+image.getWidth()+margin,y+image.getHeight()+margin);
+		alive=false;
 	}
 	public Enemy(int posX,int posY)
 	{
@@ -62,8 +76,9 @@ public class Enemy {
 	public void setDirection()
 	{
 		if(destination.size()>0){
-			direction = new PointF(destination.get(0).pointF.x-position.x,destination.get(0).pointF.y-position.y);//set the direction vector to head in 
-			length = Math.sqrt((direction.x*direction.x)+(direction.y*direction.y));//find the length of the vector
+		direction = new PointF(destination.get(0).pointF.x-position.x,destination.get(0).pointF.y-position.y);//set the direction vector to head in
+		//direction = new PointF(Data.pathList.get(pathType).pointList.get(currentWaypoint).x-position.x,Data.pathList.get(pathType).pointList.get(currentWaypoint).y-position.y);//set the direction vector to head in
+		length = Math.sqrt((direction.x*direction.x)+(direction.y*direction.y));//find the length of the vector
 
 			direction.x=(float) (direction.x/length);//normalise the direction
 			direction.y=(float) (direction.y/length);

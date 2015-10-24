@@ -172,7 +172,7 @@ public class Troop {
 		graphics.drawCircle(position.x*zoom+camera.x,position.y*zoom+camera.y,range*zoom,paint);
 
 		//text = "timer"+fireTimer+" target "+targetAcquired+" "+target;
-		text=getText();
+		text=getText()+"1";
 		graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {

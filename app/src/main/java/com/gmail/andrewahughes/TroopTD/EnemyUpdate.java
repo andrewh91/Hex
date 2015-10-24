@@ -34,7 +34,6 @@ public class EnemyUpdate {
 	boolean commandState, selectMode, movementMode, editMode;
 	int destX, destY;
 	int marqueeOriginX, marqueeOriginY;
-	List<Enemy> enemies = new ArrayList<Enemy>();
 	// int troopSelected=0;//might need an array instead
 	int destinationSelected = 0;
 	Rect marqueeRect = new Rect();
@@ -51,40 +50,41 @@ public class EnemyUpdate {
 
 		text = new String();
 		// make some random enemies
-
-		for(int j=0;j<5;j++)
+		/*for(int j=0;j<5;j++)
 		{
 			enemies.add(new Enemy(100,100));
-		}
+		}*/
 
 	}
 
 
 
 	public void update(float dt) {
-		int len = enemies.size();
+		int len = Data.enemies.size();
 		if (commandState) {
 			for (int j = 0; j < len; j++) {
-				if (enemies.get(j).destination.size() > 0) {
-					enemies.get(j).moveTo(dt);
+				if (Data.enemies.get(j).destination.size() > 0) {
+					Data.enemies.get(j).moveTo(dt);
 				}
 			}
-
-			text = "dt " + dt + " alive? " + enemies.get(0).alive;
+			if (len>0)
+			{
+				text = "dt " + dt + " alive? " + Data.enemies.get(0).alive;
+			}
 			//text = "pos "+enemies.get(0).position;
 
 			//automatically move enemies
 
 
 
-			for (int j = 0; j < enemies.size(); j++) {
-				if (enemies.get(j).alive == false) {
+			for (int j = 0; j < Data.enemies.size(); j++) {
+				if (Data.enemies.get(j).alive == false) {
 					//enemies.get(j).position=enemyBase;
-					enemies.get(j).addDestination(100, 100 * (1 + j));
-					enemies.get(j).addDestination(1100, 100 * (1 + j));
-					enemies.get(j).alive = true;
-					enemies.get(j).health = 10;
-					enemies.get(j).colour=255;
+					Data.enemies.get(j).addDestination(100, 100 * (1 + j));
+					Data.enemies.get(j).addDestination(1100, 100 * (1 + j));
+					Data.enemies.get(j).alive = true;
+					Data.enemies.get(j).health = 10;
+					Data.enemies.get(j).colour=255;
 
 
 				}
@@ -180,17 +180,17 @@ public class EnemyUpdate {
 	public void paint(Graphics graphics, Point camera, float zoom) {
 
 		graphics.drawString(text, 20, 750, paint);
-		for(int j = 0; j < enemies.size();j++){
-			if(enemies.get(j).alive)
+		for(int j = 0; j < Data.enemies.size();j++){
+			if(Data.enemies.get(j).alive)
 			{
-				graphics.drawScaledImage(enemies.get(j).image, (int) (enemies.get(j).position.x * zoom + camera.x), (int) (enemies.get(j).position.y * zoom + camera.y), enemies.get(j).rectangle.width(), enemies.get(j).rectangle.height(), zoom);
+				graphics.drawScaledImage(Data.enemies.get(j).image, (int) (Data.enemies.get(j).position.x * zoom + camera.x), (int) (Data.enemies.get(j).position.y * zoom + camera.y),Data.enemies.get(j).rectangle.width(), Data.enemies.get(j).rectangle.height(), zoom);
 			}
-			graphics.drawRect(new Rect((int)(enemies.get(j).rectangle.left*zoom + camera.x),
-					(int)(enemies.get(j).rectangle.top*zoom + camera.y),
-					(int)(enemies.get(j).rectangle.right*zoom + camera.x),
-					(int)(enemies.get(j).rectangle.bottom*zoom + camera.y)), Color.argb(100,
-					enemies.get(j).colour, 0, 0));
-			enemies.get(j).paint(graphics, camera);
+			graphics.drawRect(new Rect((int)(Data.enemies.get(j).rectangle.left*zoom + camera.x),
+					(int)(Data.enemies.get(j).rectangle.top*zoom + camera.y),
+					(int)(Data.enemies.get(j).rectangle.right*zoom + camera.x),
+					(int)(Data.enemies.get(j).rectangle.bottom*zoom + camera.y)), Color.argb(100,
+					Data.enemies.get(j).colour, 0, 0));
+			Data.enemies.get(j).paint(graphics, camera);
 		}
 	}
 }

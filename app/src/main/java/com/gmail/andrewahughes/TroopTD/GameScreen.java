@@ -6,12 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.Rect;
+import android.util.Log;
 
-import com.gmail.andrewahughes.TroopTD.Command.selectionState;
 import com.gmail.andrewahughes.framework.Game;
 import com.gmail.andrewahughes.framework.Graphics;
-import com.gmail.andrewahughes.framework.Image;
 import com.gmail.andrewahughes.framework.Screen;
 import com.gmail.andrewahughes.framework.Input.TouchEvent;
 
@@ -45,7 +43,7 @@ public class GameScreen extends Screen {
 	float zoomScaleInitial = 1, zoomPinchDistanceInitial, zoomPinchDistance,
 			zoomIncrease=1, zoomScale = 1,zoomScale2=1;
 	//Button selectBtn;//don't need cos marquee select can also tap select
-	//Button cameraBtn;//don't need cos can control camera with two fingers
+
 
 	// Rect b,c;
 	public GameScreen(Game game) {
@@ -81,6 +79,11 @@ public class GameScreen extends Screen {
 		//cameraBtn = new Button(1200, 90, "Camera", "No camera", true);
 		// b = new Rect(100,100,100,100);
 		// c = new Rect();
+
+		Data.save(game.getFileIO());
+		Data.loadPath(game.getFileIO());
+		Data.load(game.getFileIO());
+
 	}
 
 	@Override
@@ -115,9 +118,10 @@ public class GameScreen extends Screen {
 
 	private void updateRunning(List<TouchEvent> touchEvents, float deltaTime) {
 
+		//Data.load(game.getFileIO());
 		command.update(deltaTime);
 		enemyUpdate.update(deltaTime);
-		troopInteractionUpdate(command.troops,enemyUpdate.enemies,deltaTime);
+		troopInteractionUpdate(command.troops,Data.enemies,deltaTime);
 		//interaction between enemy and troop
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -131,7 +135,8 @@ public class GameScreen extends Screen {
 			text1="offset "+command.troops.get(1).offSet+"\t offset2 "+command.troops.get(1).offSet2+"\t pos "+command.troops.get(1).position;
 			text2=" origin "+zoomOrigin+" zoom "+zoomScale+"  Pos"+command.troops.get(0).position+" zoomincrease " +zoomIncrease;
 			*/
-			text="disabled? "+disableControl+ " pointers "+event.pointer+"marquee alive "+command.marqueeAlive;
+			//text="disabled? "+disableControl+ " pointers "+event.pointer+"marquee alive "+command.marqueeAlive;
+
 			if (event.type == TouchEvent.TOUCH_DOWN) {
 				// button logic
 				// if we touch a button do nothing, but if touch up event is
@@ -312,12 +317,12 @@ public class GameScreen extends Screen {
 		// 234));//cornflower blue :)
 		g.drawARGB(255, 153, 217, 234);// another way to draw a blue background
 
-		command.paint(g, cameraDrag,zoomScale);
-		enemyUpdate.paint(g, cameraDrag,zoomScale);
+		command.paint(g, cameraDrag, zoomScale);
+		enemyUpdate.paint(g, cameraDrag, zoomScale);
 
-		g.drawString(text,10, 30, blackText);
+		g.drawString(text, 10, 30, blackText);
 		g.drawString(text1, 10, 60, blackText);
-		g.drawString(text2, 10, 90, blackText);
+		//g.drawString(" "+ Data.highscores[0]+"  "+ Data.currentLevel, 50, 90, blackText);
 		// Secondly, draw the UI above the game elements.
 		if (state == GameState.Ready)
 			drawReadyUI();
@@ -395,6 +400,7 @@ public class GameScreen extends Screen {
 		// pause();
 		command.commandStateToggle();
 		enemyUpdate.commandStateToggle();
+		//Data.currentLevel++;
 	}
 	public void cameraControlInitiate(TouchEvent event)
 	{
