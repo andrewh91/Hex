@@ -51,14 +51,30 @@ public class Data {
             // Writes a file called .savedata to the SD Card
             out = new BufferedWriter(new OutputStreamWriter(
                     files.writeFile("wave.txt")));
+
             out.write(Integer.toString(1));
-                    out.write("\n");
+            out.write("\n");
             out.write(Integer.toString(500));
             out.write("\n");
             out.write(Integer.toString(1));
             out.write("\n");
+            //x pos
             out.write(Integer.toString(1000));
             out.write("\n");
+            //y pos
+            out.write(Integer.toString(300));
+            out.write("\n");
+
+            out.write(Integer.toString(1));
+            out.write("\n");
+            out.write(Integer.toString(500));
+            out.write("\n");
+            out.write(Integer.toString(1));
+            out.write("\n");
+            //x pos
+            out.write(Integer.toString(1000));
+            out.write("\n");
+            //y pos
             out.write(Integer.toString(300));
             out.write("\n");
 /*
@@ -116,9 +132,10 @@ public class Data {
                 posX=Integer.parseInt(line);
                 line =in.readLine();
                 posY=Integer.parseInt(line);
-              //  line =in.readLine();
                 enemies.add(new Enemy(pathType,delay,enemyType,posX,posY));
                 //load path .txt and enemy.txt if necessary
+
+                line =in.readLine();
             }
             // Uses for loop to load 5 numbers as high score.
             /*for (int i = 0; i < 5; i++) {
@@ -159,17 +176,17 @@ public class Data {
                 pathSize = Integer.parseInt(line);
                 line = in.readLine();
                 pathList.add(new Path(pathID));
-                j++;
 
-                for(int i=0;i>pathSize;i++) {
-                    while (line != null) {
+                for(int i=0;i<pathSize;i++) {
+
                         x = Integer.parseInt(line);
                         line = in.readLine();
                         y = Integer.parseInt(line);
-                        line = in.readLine();
                         pathList.get(j).pointList.add(new Point(x, y));
-                    }
+                        line = in.readLine();
+
                 }
+                j++;
             }
         } catch (IOException e) {
             // Catches errors. Default values are used.

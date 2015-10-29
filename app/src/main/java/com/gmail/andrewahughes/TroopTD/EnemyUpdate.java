@@ -80,8 +80,10 @@ public class EnemyUpdate {
 			for (int j = 0; j < Data.enemies.size(); j++) {
 				if (Data.enemies.get(j).alive == false) {
 					//enemies.get(j).position=enemyBase;
-					Data.enemies.get(j).addDestination(100, 100 * (1 + j));
-					Data.enemies.get(j).addDestination(1100, 100 * (1 + j));
+					for(int k = 0; k<Data.pathList.get(Data.enemies.get(j).pathType).pointList.size();k++) //for each point in the enemies' paths' pointlist ...
+					{
+						Data.enemies.get(j).addDestination(Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).x, Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).y);
+					}
 					Data.enemies.get(j).alive = true;
 					Data.enemies.get(j).health = 10;
 					Data.enemies.get(j).colour=255;

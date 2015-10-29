@@ -80,7 +80,7 @@ public class GameScreen extends Screen {
 		// b = new Rect(100,100,100,100);
 		// c = new Rect();
 
-		Data.save(game.getFileIO());
+		//Data.save(game.getFileIO());
 		Data.loadPath(game.getFileIO());
 		Data.load(game.getFileIO());
 
