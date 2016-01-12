@@ -6,12 +6,14 @@ package com.gmail.andrewahughes.TroopTD;
 public class EnemyType {
 
      int maxHealth;
+    int armour;
      int speed;
-     int damageModel;
-    public EnemyType(int h, int s, int dm)
+     int colour;
+    public EnemyType(int h, int a,int s, int c)
     {
         maxHealth =h;
+        armour = a;
         speed=s;
-        damageModel=dm;
+        colour=c;
     }
 }

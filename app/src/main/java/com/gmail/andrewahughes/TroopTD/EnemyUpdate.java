@@ -30,6 +30,7 @@ public class EnemyUpdate {
 
 	Paint paint;
 	String text;
+	float timer;
 	
 	boolean commandState, selectMode, movementMode, editMode;
 	int destX, destY;
@@ -49,6 +50,7 @@ public class EnemyUpdate {
 		paint.setTextSize(20);
 
 		text = new String();
+		timer=0;
 		// make some random enemies
 		/*for(int j=0;j<5;j++)
 		{
@@ -76,22 +78,30 @@ public class EnemyUpdate {
 			//automatically move enemies
 
 
+			timer+=dt;
 
-			for (int j = 0; j < Data.enemies.size(); j++) {
-				if (Data.enemies.get(j).alive == false) {
-					//enemies.get(j).position=enemyBase;
-					for(int k = 0; k<Data.pathList.get(Data.enemies.get(j).pathType).pointList.size();k++) //for each point in the enemies' paths' pointlist ...
-					{
-						Data.enemies.get(j).addDestination(Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).x, Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).y);
+				for (int j = 0; j < Data.enemies.size(); j++) {
+					if (Data.enemies.get(j).alive == false) {
+						//enemies.get(j).position=enemyBase;
+						if(timer>Data.enemies.get(j).delayTimer)
+						{
+							timer=0;
+							for (int k = 0; k < Data.pathList.get(Data.enemies.get(j).pathType).pointList.size(); k++) //for each point in the enemies' paths' pointlist ...
+							{
+								Data.enemies.get(j).addDestination(Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).x, Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).y);
+							}
+							Data.enemies.get(j).alive = true;
+							Data.enemies.get(j).health = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).maxHealth;
+							Data.enemies.get(j).armour = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).armour;
+							Data.enemies.get(j).speed = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).speed;
+							Data.enemies.get(j).colour = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).colour;
+						}
 					}
-					Data.enemies.get(j).alive = true;
-					Data.enemies.get(j).health = 10;
-					Data.enemies.get(j).colour=255;
-
-
 				}
-			}
+
+
 		}
+
 	}
 	public void startMarquee(int x, int y) {
 		marqueeRect.left = x;

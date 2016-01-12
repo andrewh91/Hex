@@ -38,10 +38,13 @@ public class Data {
     public static int y;
 
     public static List<Enemy> enemies = new ArrayList<Enemy>();
+    public static int enemyId;
     public static int enemyMaxHealth;
+    public static int enemyArmour;
     public static int enemySpeed;
-    public static int enemyDamageModel;
+    public static int enemyColour;
 
+    public static List<EnemyType> enemyTypeList = new ArrayList<EnemyType>();
 
 
     public static void save(FileIO files) {
@@ -116,7 +119,7 @@ public class Data {
 
             //startDelay = Integer.parseInt(in.readLine());
             //noOfEnemies = Integer.parseInt(in.readLine());
-            int i = 0;
+            enemies.clear();
 
             String line=in.readLine();
             while(line!=null)
@@ -126,12 +129,10 @@ public class Data {
                 delay=Integer.parseInt(line);
                 line =in.readLine();
                 enemyType=Integer.parseInt(line);
-                line =in.readLine();
 
 
-                posX=Integer.parseInt(line);
-                line =in.readLine();
-                posY=Integer.parseInt(line);
+                posX=pathList.get(pathType).pointList.get(0).x;
+                posY=pathList.get(pathType).pointList.get(0).y;;
                 enemies.add(new Enemy(pathType,delay,enemyType,posX,posY));
                 //load path .txt and enemy.txt if necessary
 
@@ -212,17 +213,20 @@ public class Data {
             //currentLevel = Integer.parseInt(in.readLine());
 
 
-            List<EnemyType> enemyTypeList = new ArrayList<EnemyType>();
             String line=in.readLine();
             while(line!=null)
             {
+                enemyId = Integer.parseInt(line);
+                line = in.readLine();
                 enemyMaxHealth = Integer.parseInt(line);
+                line = in.readLine();
+                enemyArmour = Integer.parseInt(line);
                 line = in.readLine();
                 enemySpeed = Integer.parseInt(line);
                 line = in.readLine();
-                enemyDamageModel = Integer.parseInt(line);
+                enemyColour = Integer.parseInt(line);
                 line = in.readLine();
-                enemyTypeList.add(new EnemyType(enemyMaxHealth, enemySpeed, enemyDamageModel));
+                enemyTypeList.add(new EnemyType(enemyMaxHealth,enemyArmour, enemySpeed, enemyColour));
 
             }
         } catch (IOException e) {

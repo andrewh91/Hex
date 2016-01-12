@@ -18,12 +18,12 @@ public class Enemy {
 	List<Destination> destination = new ArrayList<Destination>();
 	PointF position, prevPos,offSet,offSet2;
 	boolean alive = false;
-	float speed;
+	int speed;
 	double length;
 	PointF direction;
 	Rect rectangle;
 	Image image;
-	int margin=5,health =10,colour=255,pathType,delayTimer,enemyType,currentWaypoint=0;
+	int margin=5,health =10,armour=0,colour=255,pathType,delayTimer,enemyType,currentWaypoint=0;
 	public Enemy()
 	{
 		image = Assets.menu;
@@ -66,7 +66,7 @@ public class Enemy {
 	}
 	public void addDestination(int posX,int posY)
 	{
-		destination.add(new Destination(posX,posY));//set destination coordinates
+		destination.add(new Destination(posX, posY));//set destination coordinates
 		setDirection();  
 	}
 	public void editDestination( int destID, float positionX, float positionY){
@@ -75,14 +75,18 @@ public class Enemy {
 	}
 	public void setDirection()
 	{
-		if(destination.size()>0){
-		direction = new PointF(destination.get(0).pointF.x-position.x,destination.get(0).pointF.y-position.y);//set the direction vector to head in
-		//direction = new PointF(Data.pathList.get(pathType).pointList.get(currentWaypoint).x-position.x,Data.pathList.get(pathType).pointList.get(currentWaypoint).y-position.y);//set the direction vector to head in
-		length = Math.sqrt((direction.x*direction.x)+(direction.y*direction.y));//find the length of the vector
+		if(destination.size()>0) {
+			direction = new PointF(destination.get(0).pointF.x - position.x, destination.get(0).pointF.y - position.y);//set the direction vector to head in
+			//direction = new PointF(Data.pathList.get(pathType).pointList.get(currentWaypoint).x-position.x,Data.pathList.get(pathType).pointList.get(currentWaypoint).y-position.y);//set the direction vector to head in
 
-			direction.x=(float) (direction.x/length);//normalise the direction
-			direction.y=(float) (direction.y/length);
-		}
+				length = Math.sqrt((direction.x * direction.x) + (direction.y * direction.y));//find the length of the vector
+
+			if(length!=0) {
+				direction.x = (float) (direction.x / length);//normalise the direction
+				direction.y = (float) (direction.y / length);
+			}
+			}
+
 	}
 	public void moveTo(float dt)
 	{

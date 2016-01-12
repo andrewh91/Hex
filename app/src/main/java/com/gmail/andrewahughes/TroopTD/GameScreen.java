@@ -83,6 +83,7 @@ public class GameScreen extends Screen {
 		//Data.save(game.getFileIO());
 		Data.loadPath(game.getFileIO());
 		Data.load(game.getFileIO());
+		Data.loadEnemyType(game.getFileIO());
 
 	}
 
