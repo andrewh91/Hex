@@ -18,6 +18,7 @@ public class Enemy {
 	List<Destination> destination = new ArrayList<Destination>();
 	PointF position, prevPos,offSet,offSet2;
 	boolean alive = false;
+	boolean spawned = false;
 	int speed;
 	double length;
 	PointF direction;
@@ -42,6 +43,7 @@ public class Enemy {
 		image = Assets.menu;
 		rectangle = new Rect(x-margin,y-margin,x+image.getWidth()+margin,y+image.getHeight()+margin);
 		alive=false;
+		spawned=false;
 	}
 	public Enemy(int posX,int posY)
 	{
@@ -53,6 +55,7 @@ public class Enemy {
 		image = Assets.menu;
 		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
 		alive=false;
+		spawned=false;
 		
 	}
 	public void hit()
@@ -90,12 +93,13 @@ public class Enemy {
 	}
 	public void moveTo(float dt)
 	{
-		
-		position.x+= direction.x*speed*dt;//increase position by direction
-		position.y+= direction.y*speed*dt;
-		offSet2.x+= direction.x*speed*dt;
-		offSet2.y+= direction.y*speed*dt;
-
+		if(alive)
+		{
+			position.x += direction.x * speed * dt;//increase position by direction
+			position.y += direction.y * speed * dt;
+			offSet2.x += direction.x * speed * dt;
+			offSet2.y += direction.y * speed * dt;
+		}
 		if(direction.x<0)//if the direction is to the left...
 		{
 			if(position.x<destination.get(0).pointF.x)//...and we go further left than the destination ...
@@ -139,6 +143,15 @@ public class Enemy {
 		updateRect((int)position.x,(int)position.y);
 
 		
+	}
+	public int score()
+	{
+		if(destination.get(destination.size()-1).rectangle.intersect(rectangle))//if the troop has reached the final destination
+		{
+			destination.remove(0);
+			return 1;
+		}
+		return 0;
 	}
 	public void updateRect(int x,int y)
 	{

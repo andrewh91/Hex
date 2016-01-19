@@ -31,6 +31,7 @@ public class EnemyUpdate {
 	Paint paint;
 	String text;
 	float timer;
+	int score=0;
 	
 	boolean commandState, selectMode, movementMode, editMode;
 	int destX, destY;
@@ -67,11 +68,16 @@ public class EnemyUpdate {
 			for (int j = 0; j < len; j++) {
 				if (Data.enemies.get(j).destination.size() > 0) {
 					Data.enemies.get(j).moveTo(dt);
+					if (Data.enemies.get(j).score()==1&&Data.enemies.get(j).alive)
+					{
+						score++;
+						Data.enemies.get(j).alive=false;
+					}
 				}
 			}
 			if (len>0)
 			{
-				text = "dt " + dt + " alive? " + Data.enemies.get(0).alive;
+				text = "destination size " + Data.enemies.get(0).destination.size()+" alive? "+ Data.enemies.get(0).alive+" health? "+ Data.enemies.get(0).health+ " score "+score;
 			}
 			//text = "pos "+enemies.get(0).position;
 
@@ -81,7 +87,7 @@ public class EnemyUpdate {
 			timer+=dt;
 
 				for (int j = 0; j < Data.enemies.size(); j++) {
-					if (Data.enemies.get(j).alive == false) {
+					if (Data.enemies.get(j).spawned == false) {
 						//enemies.get(j).position=enemyBase;
 						if(timer>Data.enemies.get(j).delayTimer)
 						{
@@ -91,6 +97,7 @@ public class EnemyUpdate {
 								Data.enemies.get(j).addDestination(Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).x, Data.pathList.get(Data.enemies.get(j).pathType).pointList.get(k).y);
 							}
 							Data.enemies.get(j).alive = true;
+							Data.enemies.get(j).spawned = true;
 							Data.enemies.get(j).health = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).maxHealth;
 							Data.enemies.get(j).armour = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).armour;
 							Data.enemies.get(j).speed = Data.enemyTypeList.get(Data.enemies.get(j).enemyType).speed;
