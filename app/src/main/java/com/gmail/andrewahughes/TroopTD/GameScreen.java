@@ -67,7 +67,6 @@ public class GameScreen extends Screen {
 		text2 = new String();
 
 		bullet = new Bullet();
-		command = new Command();
 		enemyUpdate = new EnemyUpdate();
 		cameraOrigin = new Point();
 		cameraDrag = new Point(0, 0);
@@ -85,6 +84,7 @@ public class GameScreen extends Screen {
 		Data.load(game.getFileIO());
 		Data.loadEnemyType(game.getFileIO());
 
+		command = new Command();
 	}
 
 	@Override

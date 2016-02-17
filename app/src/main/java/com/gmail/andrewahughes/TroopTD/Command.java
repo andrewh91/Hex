@@ -42,7 +42,7 @@ public class Command {// this class will contain all the methods to interact
 	public Command() {
 		commandState = true;// movement is allowed - not paused
 
-		// make some random troops
+		/* make some random troops
 		for (int i = 0; i < 10; i++) {
 			Random n;
 			n = new Random();
@@ -53,7 +53,17 @@ public class Command {// this class will contain all the methods to interact
 		{
 			enemies.add(new Troop(0,400));
 		}*/
-
+		//create troops based on wave data text file
+		for (int i = 0; i < Data.initialTroopNo; i++) {
+			troops.add(new Troop(Data.initialTroopRectX,Data.initialTroopRectY));
+		}
+		Rect r = new Rect(Data.initialTroopRectX,Data.initialTroopRectY,Data.initialTroopRectX2,Data.initialTroopRectY2);
+		List<Integer> allTroops = new ArrayList<Integer>();
+		for(int j=0;j<Data.initialTroopNo;j++)
+		{
+			allTroops.add(j);
+		}
+		directTo(allTroops,r);
 	}
 
 	public void evaluateTouch(int positionX, int positionY) {
@@ -100,7 +110,7 @@ public class Command {// this class will contain all the methods to interact
 			{
 				finishMarquee(positionX, positionY);
 			}
-			directTo(troopSelected, positionX, positionY);
+			directTo(troopSelected,marqueeRect);
 			state = interactionState.select;
 		} else if (state == interactionState.edit) {
 			for (int i = 0; i < troopSelected.size(); i++) {
@@ -112,19 +122,19 @@ public class Command {// this class will contain all the methods to interact
 
 	}
 
-	public void directTo(List<Integer> troop, int x, int y) {
+	public void directTo(List<Integer> troop, Rect rect) {
 		// troops.get(troop).setDirection(x, y);//adds a new destination to the
 		// troop
 		//for (int i = 0; i < troop.size(); i++) {
 		//	troops.get(troop.get(i)).addDestination(x, y);
 		//}
 		int noOfTroops = troop.size();
-		int width = marqueeRect.right-marqueeRect.left;
+		int width = rect.right-rect.left;
 		if(width==0)
 		{
 			width=1;
 		}
-		int height = marqueeRect.bottom-marqueeRect.top;
+		int height = rect.bottom-rect.top;
 		if(height==0)
 		{
 			height=1;
@@ -176,21 +186,21 @@ public class Command {// this class will contain all the methods to interact
 				{
 					if(columns<=1&&rows<=1||noOfTroops<=1)
 					{
-						troops.get(troop.get(k)).addDestination(marqueeRect.left+(int)((float)width/2),marqueeRect.top+(int)((float)height/2));
+						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height/2));
 					}
 					else if(columns<=1)
 					{
-						troops.get(troop.get(k)).addDestination(marqueeRect.left+(int)((float)width/2),marqueeRect.top+(int)((float)height*((float)j/(float)(rows-1))));
+						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
 
 					}
 					else if(rows<=1)
 					{
-						troops.get(troop.get(k)).addDestination(marqueeRect.left+(int)((float)width*((float)i/(float)(columns-1))),marqueeRect.top+(int)((float)height/2));
+						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height/2));
 
 					}
 					else if(columns>1&&rows>1)
 					{
-						troops.get(troop.get(k)).addDestination(marqueeRect.left+(int)((float)width*((float)i/(float)(columns-1))),marqueeRect.top+(int)((float)height*((float)j/(float)(rows-1))));
+						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
 					}
 					k++;
 				}

@@ -28,6 +28,12 @@ public class Data {
     public static int pathType;
     public static int delay;
 
+    public static int initialTroopNo;
+    public static int initialTroopRectX;
+    public static int initialTroopRectY;
+    public static int initialTroopRectX2;
+    public static int initialTroopRectY2;
+
     public static int posX;
     public static int posY;
 
@@ -122,6 +128,16 @@ public class Data {
             enemies.clear();
 
             String line=in.readLine();
+            initialTroopNo=Integer.parseInt(line);
+            line =in.readLine();
+            initialTroopRectX=Integer.parseInt(line);//left
+            line =in.readLine();
+            initialTroopRectY=Integer.parseInt(line);//top
+            line =in.readLine();
+            initialTroopRectX2=Integer.parseInt(line);//right
+            line =in.readLine();
+            initialTroopRectY2=Integer.parseInt(line);//bottom
+            line =in.readLine();
             while(line!=null)
             {
                 pathType=Integer.parseInt(line);
@@ -243,6 +259,46 @@ public class Data {
     }
 
 
+    public static void loadtroop(FileIO files) {
+        BufferedReader in = null;
+        try {
+            // Reads file called Save Data
+            in = new BufferedReader(new InputStreamReader(
+                    files.readFile("troop.txt")));
+
+            // Loads values from the file and replaces default values.
+            //soundEnabled = Boolean.parseBoolean(in.readLine());
+            //currentLevel = Integer.parseInt(in.readLine());
+
+
+            String line=in.readLine();
+            while(line!=null)
+            {
+                enemyId = Integer.parseInt(line);
+                line = in.readLine();
+                enemyMaxHealth = Integer.parseInt(line);
+                line = in.readLine();
+                enemyArmour = Integer.parseInt(line);
+                line = in.readLine();
+                enemySpeed = Integer.parseInt(line);
+                line = in.readLine();
+                enemyColour = Integer.parseInt(line);
+                line = in.readLine();
+                enemyTypeList.add(new EnemyType(enemyMaxHealth,enemyArmour, enemySpeed, enemyColour));
+
+            }
+        } catch (IOException e) {
+            // Catches errors. Default values are used.
+        } catch (NumberFormatException e) {
+            // Catches errors. Default values are used.
+        } finally {
+            try {
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+            }
+        }
+    }
     // Use this method to add 5 numbers to the high score.
     public static void addScore(int score) {
         for (int i = 0; i < 5; i++) {
