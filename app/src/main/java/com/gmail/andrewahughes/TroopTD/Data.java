@@ -50,6 +50,13 @@ public class Data {
     public static int enemySpeed;
     public static int enemyColour;
 
+
+    public static List<Troop> troops = new ArrayList<Troop>();//list of the troops to be used
+    public static String troopId;
+    public static int troopSpeed;
+    public static int troopWeaponType;
+
+
     public static List<EnemyType> enemyTypeList = new ArrayList<EnemyType>();
 
 
@@ -259,7 +266,7 @@ public class Data {
     }
 
 
-    public static void loadtroop(FileIO files) {
+    public static void loadTroop(FileIO files) {
         BufferedReader in = null;
         try {
             // Reads file called Save Data
@@ -274,17 +281,14 @@ public class Data {
             String line=in.readLine();
             while(line!=null)
             {
-                enemyId = Integer.parseInt(line);
+                troopId =line;
                 line = in.readLine();
-                enemyMaxHealth = Integer.parseInt(line);
+                troopSpeed = Integer.parseInt(line);
                 line = in.readLine();
-                enemyArmour = Integer.parseInt(line);
+                troopWeaponType = Integer.parseInt(line);
                 line = in.readLine();
-                enemySpeed = Integer.parseInt(line);
-                line = in.readLine();
-                enemyColour = Integer.parseInt(line);
-                line = in.readLine();
-                enemyTypeList.add(new EnemyType(enemyMaxHealth,enemyArmour, enemySpeed, enemyColour));
+
+                troops.add(new Troop(troopId,troopSpeed, troopWeaponType));
 
             }
         } catch (IOException e) {

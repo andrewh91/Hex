@@ -55,7 +55,7 @@ public class Command {// this class will contain all the methods to interact
 		}*/
 		//create troops based on wave data text file
 		for (int i = 0; i < Data.initialTroopNo; i++) {
-			troops.add(new Troop(Data.initialTroopRectX,Data.initialTroopRectY));
+			Data.troops.get(i).setPos(Data.initialTroopRectX,Data.initialTroopRectY);
 		}
 		Rect r = new Rect(Data.initialTroopRectX,Data.initialTroopRectY,Data.initialTroopRectX2,Data.initialTroopRectY2);
 		List<Integer> allTroops = new ArrayList<Integer>();
@@ -67,7 +67,7 @@ public class Command {// this class will contain all the methods to interact
 	}
 
 	public void evaluateTouch(int positionX, int positionY) {
-		int len = troops.size();
+		int len = Data.troops.size();
 		if (state == interactionState.select) {
 			 if (selState == selectionState.marquee&&getMarqueeSize(positionX, positionY)>25) {   //if in marquee select mode and we draw a big enough rect
 				if(marqueeAlive)
@@ -77,7 +77,7 @@ public class Command {// this class will contain all the methods to interact
 				troopSelected.clear();
 				for (int i = 0; i < len; i++) {
 					
-					if (marqueeRect.contains(troops.get(i).rectangle.centerX(),troops.get(i).rectangle.centerY())) {
+					if (marqueeRect.contains(Data.troops.get(i).rectangle.centerX(),Data.troops.get(i).rectangle.centerY())) {
 						state = interactionState.direct;
 						troopSelected.add(i);
 					}
@@ -86,14 +86,14 @@ public class Command {// this class will contain all the methods to interact
 			 else if (getMarqueeSize(positionX, positionY)<=25) {
 				for (int i = 0; i < len; i++) {
 
-					if (troops.get(i).rectangle.contains(positionX, positionY)) {
+					if (Data.troops.get(i).rectangle.contains(positionX, positionY)) {
 						state = interactionState.direct;
 						troopSelected.clear();
 						troopSelected.add(i);
 						break;
 					}
-					for (int j = 0; j < troops.get(i).destination.size(); j++) {
-						if (troops.get(i).destination.get(j).rectangle
+					for (int j = 0; j < Data.troops.get(i).destination.size(); j++) {
+						if (Data.troops.get(i).destination.get(j).rectangle
 								.contains(positionX, positionY)) {
 							destinationSelected = j;
 							troopSelected.clear();
@@ -114,7 +114,7 @@ public class Command {// this class will contain all the methods to interact
 			state = interactionState.select;
 		} else if (state == interactionState.edit) {
 			for (int i = 0; i < troopSelected.size(); i++) {
-				troops.get(troopSelected.get(i)).editDestination(
+				Data.troops.get(troopSelected.get(i)).editDestination(
 						destinationSelected, positionX, positionY);
 			}
 			state = interactionState.select;
@@ -186,21 +186,21 @@ public class Command {// this class will contain all the methods to interact
 				{
 					if(columns<=1&&rows<=1||noOfTroops<=1)
 					{
-						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height/2));
+						Data.troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height/2));
 					}
 					else if(columns<=1)
 					{
-						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
+						Data.troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width/2),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
 
 					}
 					else if(rows<=1)
 					{
-						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height/2));
+						Data.troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height/2));
 
 					}
 					else if(columns>1&&rows>1)
 					{
-						troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
+						Data.troops.get(troop.get(k)).addDestination(rect.left+(int)((float)width*((float)i/(float)(columns-1))),rect.top+(int)((float)height*((float)j/(float)(rows-1))));
 					}
 					k++;
 				}
@@ -215,13 +215,13 @@ public class Command {// this class will contain all the methods to interact
 
 	public void update(float dt) {
 
-		int len = troops.size();
+		int len = Data.troops.size();
 
 		if (commandState) {
 			for (int i = 0; i < len; i++) {
-				troops.get(i).fireTimer-=dt;
-				if (troops.get(i).destination.size() > 0) {//move troops
-					troops.get(i).moveTo(dt);
+				Data.troops.get(i).fireTimer-=dt;
+				if (Data.troops.get(i).destination.size() > 0) {//move troops
+					Data.troops.get(i).moveTo(dt);
 				}
 			}
 			/*for(int j = 0;j<enemies.size();j++)
@@ -295,11 +295,11 @@ public class Command {// this class will contain all the methods to interact
 	}
 
 	public void createTroop() {
-		troops.add(new Troop());
+		Data.troops.add(new Troop());
 	}
 
 	public void createTroop(int positionX, int positionY) {
-		troops.add(new Troop(positionX, positionY));
+		Data.troops.add(new Troop(positionX, positionY));
 	}
 
 	public void commandStateFalse() {
@@ -333,16 +333,16 @@ public class Command {// this class will contain all the methods to interact
 	}
 
 	public void paint(Graphics graphics, Point camera, float zoom) {
-		int len = troops.size();
+		int len = Data.troops.size();
 		for (int i = 0; i < len; i++) {
-			graphics.drawScaledImage(troops.get(i).image,(int) (troops.get(i).position.x*zoom+camera.x),(int) (  troops.get(i).position.y*zoom+camera.y),troops.get(i).rectangle.width(),troops.get(i).rectangle.height(),zoom);
+			graphics.drawScaledImage(Data.troops.get(i).image,(int) (Data.troops.get(i).position.x*zoom+camera.x),(int) (  Data.troops.get(i).position.y*zoom+camera.y),Data.troops.get(i).rectangle.width(),Data.troops.get(i).rectangle.height(),zoom);
 					
-			graphics.drawRect(new Rect((int)(troops.get(i).rectangle.left*zoom + camera.x),
-					(int)(troops.get(i).rectangle.top*zoom + camera.y),
-					(int)(troops.get(i).rectangle.right*zoom + camera.x),
-					(int)(troops.get(i).rectangle.bottom*zoom + camera.y)), Color.argb(100,
-					troops.get(i).colour, 0, 0));
-			troops.get(i).paint(graphics, camera,zoom);
+			graphics.drawRect(new Rect((int)(Data.troops.get(i).rectangle.left*zoom + camera.x),
+					(int)(Data.troops.get(i).rectangle.top*zoom + camera.y),
+					(int)(Data.troops.get(i).rectangle.right*zoom + camera.x),
+					(int)(Data.troops.get(i).rectangle.bottom*zoom + camera.y)), Color.argb(100,
+					Data.troops.get(i).colour, 0, 0));
+			Data.troops.get(i).paint(graphics, camera,zoom);
 		}
 		/*for(int j = 0; j < enemies.size();j++){
 			graphics.drawScaledImage(enemies.get(j).image,(int) (enemies.get(j).position.x*zoom+camera.x),(int) (  enemies.get(j).position.y*zoom+camera.y),enemies.get(j).rectangle.width(),enemies.get(j).rectangle.height(),zoom);

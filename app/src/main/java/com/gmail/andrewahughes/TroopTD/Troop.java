@@ -27,9 +27,11 @@ public class Troop {
 	PointF direction;
 	Rect rectangle;
 	String text;
+	String id;
 	Paint paint;
 	Image image;
 	int margin=5,target,colour = 255;
+	int weaponType;
 	public Troop()
 	{
 		image = Assets.menu;
@@ -53,7 +55,35 @@ public class Troop {
 		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
 
 	}
+	public Troop(String troopId,int troopSpeed,int troopWeaponType)
+	{
+		id=troopId;
+		speed = troopSpeed;
+		weaponType = troopWeaponType;
+		paint = new Paint();
+		paint.setTextSize(30);
+		paint.setTextAlign(Paint.Align.CENTER);
+		paint.setAntiAlias(true);
+		paint.setColor(Color.WHITE);
+		text = new String();
+		position=new PointF(0,0);
+		prevPos=new PointF(0,0);
+		offSet = new PointF(0,0);
+		offSet2 =new PointF(0,0);
+		image = Assets.menu;
+		rectangle = new Rect(0,0,0,0);
 
+	}
+
+	public void setPos(int posX,int posY){
+
+		position=new PointF(posX, posY);
+		prevPos=new PointF(posX, posY);
+		offSet = new PointF(posX,posY);
+		offSet2 =new PointF(0,0);
+
+		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
+	}
 	public String getText() {
 		File sdcard = Environment.getExternalStorageDirectory();
 		File file = new File(sdcard, "file.txt");
@@ -174,8 +204,9 @@ public class Troop {
 		graphics.drawCircle(position.x*zoom+camera.x,position.y*zoom+camera.y,range*zoom,paint);
 
 		//text = "timer"+fireTimer+" target "+targetAcquired+" "+target;
-		text=getText()+"1";
-		graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
+		//text=getText()+"1";
+		//graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
+		graphics.drawString(id, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {
     		graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),
