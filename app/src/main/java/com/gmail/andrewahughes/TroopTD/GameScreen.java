@@ -1,11 +1,13 @@
 package com.gmail.andrewahughes.TroopTD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.gmail.andrewahughes.framework.Game;
@@ -32,6 +34,7 @@ public class GameScreen extends Screen {
 	Bullet bullet;
 	Command command;
 	EnemyUpdate enemyUpdate;
+	Quadtree quad = new Quadtree(0, new Rect(0,0,1280,800));
 	boolean commandState = true;
 	boolean cameraMode = false;
 	boolean disableControl = false;//variable to stop input commands while moving camera
@@ -42,6 +45,7 @@ public class GameScreen extends Screen {
 	PointF zoomOrigin, zoomDrag, zoomDrag2, finger1, finger2;
 	float zoomScaleInitial = 1, zoomPinchDistanceInitial, zoomPinchDistance,
 			zoomIncrease=1, zoomScale = 1,zoomScale2=1;
+
 	//Button selectBtn;//don't need cos marquee select can also tap select
 
 
@@ -123,7 +127,7 @@ public class GameScreen extends Screen {
 		//Data.load(game.getFileIO());
 		command.update(deltaTime);
 		enemyUpdate.update(deltaTime);
-		troopInteractionUpdate(command.troops,Data.enemies,deltaTime);
+		troopInteractionUpdate(Data.troops,Data.enemies,deltaTime);
 		//interaction between enemy and troop
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -238,40 +242,47 @@ public class GameScreen extends Screen {
 	}
 
 	private void troopInteractionUpdate(List<Troop>troop,List<Enemy>enemy ,float deltaTime) {
-		for(int i = 0;i<troop.size();i++)//for each troop
-		{
-			if(troop.get(i).alive&&!troop.get(i).targetAcquired)//if troop is alive and is not already shooting something
-			{
-				for(int j = 0;j<enemy.size();j++)//for each enemy
-				{
-					if(enemy.get(j).alive&&distanceBetween(troop.get(i).position,enemy.get(j).position)<troop.get(i).range*troop.get(i).range) {//if an alive enemy is in range
-						if(distanceBetween(troop.get(i).position,enemy.get(j).position)<=//if enemy is the closest
-								troop.get(i).closestEnemy)
-						{
-							troop.get(i).target=j;
-							troop.get(i).closestEnemy=distanceBetween(troop.get(i).position,enemy.get(j).position);
-							troop.get(i).targetAcquired=true;
+		//collision detection quad tree////////////////////
+		quad.clear();
+		//add all objects
+		for (int i = 0; i < enemy.size(); i++) {
+			if (enemy.get(i).alive) {
+				quad.insert(enemy.get(i).rectangle,i);
+			}
+		}
+		List<Rect> returnObjects = new ArrayList();
+		List<Integer> a = new ArrayList();
+		for (int i = 0; i < troop.size(); i++) {
+			if (troop.get(i).alive) {
+				if (!troop.get(i).targetAcquired) {//if no target acquired
+					returnObjects.clear();
+					quad.retrieve(returnObjects, troop.get(i).rectangle);
+					for (int j = 0; j < returnObjects.size(); j++) {
+						// Run collision detection algorithm between objects
+						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//if an alive enemy is in range
+
+							a= (List<Integer>) quad.retrieveIds();
+							troop.get(i).target =a.get(j);
+							troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY()));
+							troop.get(i).targetAcquired = true;
 						}
+					}
+				} else {
+					if (troop.get(i).fireTimer < 0) {
+						troop.get(i).fireTimer = 50;
+						troop.get(i).fire();
+						enemy.get(troop.get(i).target).hit();
+					}
+					if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
+							enemy.get(troop.get(i).target).health <= 0) {
+						troop.get(i).targetAcquired = false;
+						troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
 					}
 				}
 			}
-			if(troop.get(i).targetAcquired)
-			{
-				if (troop.get(i).fireTimer<0) {
-					troop.get(i).fireTimer=50;
-					troop.get(i).fire();
-					enemy.get(troop.get(i).target).hit();
-				}
-				if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range*troop.get(i).range ||
-						enemy.get(troop.get(i).target).health <= 0)
-				{
-					troop.get(i).targetAcquired=false;
-					troop.get(i).closestEnemy=troop.get(i).range*troop.get(i).range;
-				}
-
-			}
 		}
 	}
+
 	private float distanceBetween(PointF p1,PointF p2)
 	{
 		float a,b;
