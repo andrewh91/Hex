@@ -337,11 +337,14 @@ public class Command {// this class will contain all the methods to interact
 		for (int i = 0; i < len; i++) {
 			graphics.drawScaledImage(Data.troops.get(i).image,(int) (Data.troops.get(i).position.x*zoom+camera.x),(int) (  Data.troops.get(i).position.y*zoom+camera.y),Data.troops.get(i).rectangle.width(),Data.troops.get(i).rectangle.height(),zoom);
 					
-			graphics.drawRect(new Rect((int)(Data.troops.get(i).rectangle.left*zoom + camera.x),
-					(int)(Data.troops.get(i).rectangle.top*zoom + camera.y),
-					(int)(Data.troops.get(i).rectangle.right*zoom + camera.x),
-					(int)(Data.troops.get(i).rectangle.bottom*zoom + camera.y)), Color.argb(100,
+			graphics.drawRect(new Rect((int) (Data.troops.get(i).rectangle.left * zoom + camera.x),
+					(int) (Data.troops.get(i).rectangle.top * zoom + camera.y),
+					(int) (Data.troops.get(i).rectangle.right * zoom + camera.x),
+					(int) (Data.troops.get(i).rectangle.bottom * zoom + camera.y)), Color.argb(100,
 					Data.troops.get(i).colour, 0, 0));
+			graphics.drawRect(new Rect((int)(Data.troops.get(i).rangeRect.left*zoom+camera.x),(int)(Data.troops.get(i).rangeRect.top*zoom+camera.y),
+					(int)(Data.troops.get(i).rangeRect.right*zoom+camera.x),(int)(Data.troops.get(i).rangeRect.bottom*zoom+camera.y)), Color.argb(100,0,0,255));
+
 			Data.troops.get(i).paint(graphics, camera,zoom);
 		}
 		/*for(int j = 0; j < enemies.size();j++){

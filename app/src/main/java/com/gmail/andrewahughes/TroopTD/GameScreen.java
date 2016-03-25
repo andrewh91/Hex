@@ -256,12 +256,12 @@ public class GameScreen extends Screen {
 			if (troop.get(i).alive) {
 				if (!troop.get(i).targetAcquired) {//if no target acquired
 					returnObjects.clear();
-					quad.retrieve(returnObjects, troop.get(i).rectangle);
+					a.clear();
+					quad.retrieve(returnObjects, troop.get(i).rectangle,a);
 					for (int j = 0; j < returnObjects.size(); j++) {
 						// Run collision detection algorithm between objects
 						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//if an alive enemy is in range
 
-							a= (List<Integer>) quad.retrieveIds();
 							troop.get(i).target =a.get(j);
 							troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY()));
 							troop.get(i).targetAcquired = true;
@@ -332,6 +332,7 @@ public class GameScreen extends Screen {
 
 		command.paint(g, cameraDrag, zoomScale);
 		enemyUpdate.paint(g, cameraDrag, zoomScale);
+		quad.paint(g,cameraDrag,zoomScale);
 
 		g.drawString(text, 10, 30, blackText);
 		g.drawString(text1, 10, 60, blackText);

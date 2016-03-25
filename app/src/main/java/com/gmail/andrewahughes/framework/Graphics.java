@@ -22,6 +22,8 @@ public interface Graphics {
 
 	public void drawRect(PointF centre,int width, int height, float scale,PointF camera, int color);
 
+	public void drawRectBorder(PointF centre,int width, int height, float scale,Point camera, int color);
+
 	public void drawCircle(float x, float y, float r, Paint p);
 	
 	public void drawImage(Image image,int x, int y, int srcX, int srcY, int srcWidth, int srcHeight);

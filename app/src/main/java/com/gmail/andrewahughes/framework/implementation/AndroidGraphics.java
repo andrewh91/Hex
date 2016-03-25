@@ -110,10 +110,20 @@ public class AndroidGraphics implements Graphics {
 		paint.setColor(color);
 		paint.setStyle(Style.FILL);
 		canvas.drawRect( new Rect(
-				(int)((centre.x-(width/2))*scale+camera.x),
-				(int)((centre.y-(height/2))*scale+camera.y),
-				(int)((centre.x+(width/2))*scale+camera.x),
-				(int)((centre.y+(height/2))*scale+camera.y)),
+						(int)((centre.x-(width/2))*scale+camera.x),
+						(int)((centre.y-(height/2))*scale+camera.y),
+						(int)((centre.x+(width/2))*scale+camera.x),
+						(int)((centre.y+(height/2))*scale+camera.y)),
+				paint);
+	}
+	public void drawRectBorder(PointF centre,int width,int height,float scale,Point camera, int color){
+		paint.setColor(color);
+		paint.setStyle(Style.STROKE);
+		canvas.drawRect( new Rect(
+						(int)((centre.x-(width/2))*scale+camera.x),
+						(int)((centre.y-(height/2))*scale+camera.y),
+						(int)((centre.x+(width/2))*scale+camera.x),
+						(int)((centre.y+(height/2))*scale+camera.y)),
 				paint);
 	}
 	@Override

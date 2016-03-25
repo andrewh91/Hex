@@ -25,7 +25,7 @@ public class Troop {
 	float speed, range = 150,closestEnemy=range*range,fireTimer=5;
 	double length;
 	PointF direction;
-	Rect rectangle;
+	Rect rectangle,rangeRect;
 	String text;
 	String id;
 	Paint paint;
@@ -47,6 +47,7 @@ public class Troop {
 		paint.setColor(Color.WHITE);
 		text = new String();
 		position=new PointF(posX, posY);
+		rangeRect = new Rect(posX-((int)range),posY-((int)range),posX+((int)range),posY+((int)range));
 		prevPos=new PointF(posX, posY);
 		offSet = new PointF(posX,posY);
 		offSet2 =new PointF(0,0);
@@ -73,6 +74,8 @@ public class Troop {
 		image = Assets.menu;
 		rectangle = new Rect(0,0,0,0);
 
+		rangeRect = new Rect((int)position.x-((int)range),(int)position.y-((int)range),(int)position.x+((int)range),(int)position.y+((int)range));
+
 	}
 
 	public void setPos(int posX,int posY){
@@ -83,6 +86,8 @@ public class Troop {
 		offSet2 =new PointF(0,0);
 
 		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
+		rangeRect = new Rect(posX-((int)range),posY-((int)range),posX+((int)range),posY+((int)range));
+
 	}
 	public String getText() {
 		File sdcard = Environment.getExternalStorageDirectory();
@@ -192,6 +197,10 @@ public class Troop {
 		rectangle.top = y-margin;
 		rectangle.right = x+image.getWidth()+margin;
 		rectangle.bottom = y+image.getHeight()+margin;
+		rangeRect.left = x-((int)range/2);
+		rangeRect.top = y-((int)range/2);
+		rangeRect.right = x+((int)range/2);
+		rangeRect.bottom = y+((int)range/2);
 	}
 
 	public void removeDirection()
@@ -209,7 +218,7 @@ public class Troop {
 		graphics.drawString(id, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {
-    		graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),
+			graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),
 					(int)(destination.get(i).rectangle.right*zoom+camera.x),(int)(destination.get(i).rectangle.bottom*zoom+camera.y)), Color.argb(100,0,255,0));
         }
 	}

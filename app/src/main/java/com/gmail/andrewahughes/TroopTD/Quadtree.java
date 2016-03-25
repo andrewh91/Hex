@@ -5,20 +5,25 @@ package com.gmail.andrewahughes.TroopTD;
  * http://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
  */
 
+import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.PointF;
+
+import com.gmail.andrewahughes.framework.Graphics;
+
 public class Quadtree {
 
-    private int MAX_OBJECTS = 10;
+    private int MAX_OBJECTS = 2;
     private int MAX_LEVELS = 5;
 
     private int level;
     //private List objects;
     private List<Rect> objects = new ArrayList<Rect>();
     public List<Integer> ids = new ArrayList<Integer>();
-    private Rect bounds;
+    public Rect bounds;
     private Quadtree[] nodes;
 
     /*
@@ -27,6 +32,7 @@ public class Quadtree {
     public Quadtree(int pLevel, Rect pBounds) {
         level = pLevel;
         objects = new ArrayList();
+        ids = new ArrayList();
         bounds = pBounds;
         nodes = new Quadtree[4];
     }
@@ -36,6 +42,7 @@ public class Quadtree {
      */
     public void clear() {
         objects.clear();
+        ids.clear();
 
         for (int i = 0; i < nodes.length; i++) {
             if (nodes[i] != null) {
@@ -135,7 +142,8 @@ public class Quadtree {
             while (i < objects.size()) {
                 int index = getIndex(objects.get(i));
                 if (index != -1) {
-                    nodes[index].insert(objects.remove(i),ids.remove(i));
+                    nodes[index].insert(objects.remove(i), ids.remove(i));
+                    //ids.remove(i);
                 }
                 else {
                     i++;
@@ -146,18 +154,26 @@ public class Quadtree {
     /*
  * Return all objects that could collide with the given object
  */
-    public List retrieve(List returnObjects, Rect pRect) {
+    public List retrieve(List returnObjects, Rect pRect,List returnIds) {
         int index = getIndex(pRect);
         if (index != -1 && nodes[0] != null) {
-            nodes[index].retrieve(returnObjects, pRect);
+            nodes[index].retrieve(returnObjects, pRect,returnIds);
         }
 
         returnObjects.addAll(objects);
 
+        returnIds.addAll(ids);
         return returnObjects;
     }
-    public List retrieveIds() {
-        return ids;
+    public void paint(Graphics graphics, Point camera, float zoom) {
+
+        for (int i = 0; i < nodes.length; i++) {
+
+            if (nodes[i] != null) {
+                nodes[i].paint(graphics,camera,zoom);
+                graphics.drawRectBorder(new PointF(nodes[i].bounds.centerX(), nodes[i].bounds.centerY()), nodes[i].bounds.width(), nodes[i].bounds.height(), zoom, camera, Color.argb(100, 255, 0, 0));
+            }
+        }
     }
 }
 
