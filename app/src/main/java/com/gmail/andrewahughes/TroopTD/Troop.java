@@ -197,10 +197,10 @@ public class Troop {
 		rectangle.top = y-margin;
 		rectangle.right = x+image.getWidth()+margin;
 		rectangle.bottom = y+image.getHeight()+margin;
-		rangeRect.left = x-((int)range/2);
-		rangeRect.top = y-((int)range/2);
-		rangeRect.right = x+((int)range/2);
-		rangeRect.bottom = y+((int)range/2);
+		rangeRect.left = x-((int)range);
+		rangeRect.top = y-((int)range);
+		rangeRect.right = x+((int)range);
+		rangeRect.bottom = y+((int)range);
 	}
 
 	public void removeDirection()

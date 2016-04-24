@@ -257,7 +257,7 @@ public class GameScreen extends Screen {
 				if (!troop.get(i).targetAcquired) {//if no target acquired
 					returnObjects.clear();
 					a.clear();
-					quad.retrieve(returnObjects, troop.get(i).rectangle,a);
+					quad.retrieve(returnObjects, troop.get(i).rangeRect,a);
 					for (int j = 0; j < returnObjects.size(); j++) {
 						// Run collision detection algorithm between objects
 						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//if an alive enemy is in range

@@ -78,6 +78,43 @@ public class Quadtree {
         nodes[3] = new Quadtree(level+1, new Rect(x + subWidth, y + subHeight,  x + subWidth + subWidth,    y + subHeight + subHeight));
     }
 
+    /*private int getIndex(Rect pRect) {
+        int index = -1;
+        //double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
+        //double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+        double verticalMidpoint = bounds.centerX();
+        double horizontalMidpoint = bounds.centerY();
+
+        // Object can completely fit within the top quadrants
+        //boolean topQuadrant = (pRect.getY() < horizontalMidpoint && pRect.getY() + pRect.getHeight() < horizontalMidpoint);
+        boolean topQuadrant = (pRect.top< horizontalMidpoint && pRect.top + pRect.height() < horizontalMidpoint);
+        // Object can completely fit within the bottom quadrants
+        boolean bottomQuadrant = (pRect.top > horizontalMidpoint);
+
+        // Object can completely fit within the left quadrants
+        //if (pRect.getX() < verticalMidpoint && pRect.getX() + pRect.getWidth() < verticalMidpoint) {
+        if (pRect.right < verticalMidpoint) {
+            if (topQuadrant) {
+                index = 1;
+            }
+            else if (bottomQuadrant) {
+                index = 2;
+            }
+        }
+        // Object can completely fit within the right quadrants
+        //else if (pRect.getX() > verticalMidpoint) {
+        else if (pRect.left > verticalMidpoint) {
+            if (topQuadrant) {
+                index = 0;
+            }
+            else if (bottomQuadrant) {
+                index = 3;
+            }
+        }
+
+        return index;
+    }*/
+
     private int getIndex(Rect pRect) {
         int index = -1;
         //double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
@@ -114,6 +151,7 @@ public class Quadtree {
 
         return index;
     }
+
     /*
  * Insert the object into the quadtree. If the node
  * exceeds the capacity, it will split and add all
@@ -156,10 +194,21 @@ public class Quadtree {
  */
     public List retrieve(List returnObjects, Rect pRect,List returnIds) {
         int index = getIndex(pRect);
-        if (index != -1 && nodes[0] != null) {
-            nodes[index].retrieve(returnObjects, pRect,returnIds);
-        }
 
+        if(nodes[0]!=null)
+        {
+            if(index!=-1)
+            {
+                nodes[index].retrieve(returnObjects, pRect,returnIds);
+            }
+            else
+            {
+                for(int i =0;i<nodes.length;i++)
+                {
+                    nodes[i].retrieve(returnObjects, pRect,returnIds);
+                }
+            }
+        }
         returnObjects.addAll(objects);
 
         returnIds.addAll(ids);
