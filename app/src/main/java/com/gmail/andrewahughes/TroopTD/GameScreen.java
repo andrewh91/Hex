@@ -270,7 +270,7 @@ public class GameScreen extends Screen {
 				} else {
 					if (troop.get(i).fireTimer < 0) {
 						troop.get(i).fireTimer = 50;
-						troop.get(i).fire();
+						troop.get(i).fire((int)enemy.get(troop.get(i).target).position.x,(int)enemy.get(troop.get(i).target).position.y);
 						enemy.get(troop.get(i).target).hit();
 					}
 					if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||

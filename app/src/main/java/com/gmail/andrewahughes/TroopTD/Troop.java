@@ -31,6 +31,7 @@ public class Troop {
 	Paint paint;
 	Image image;
 	int margin=5,target,colour = 255;
+	List<BulletTrace> bulletTraceList = new ArrayList<BulletTrace>();
 	int weaponType;
 	public Troop()
 	{
@@ -107,7 +108,7 @@ public class Troop {
 		}
 		return text.toString();
 	}
-	public void fire()
+	public void fire(int targetPosX,int targetPosY )
 	{
 		if(colour<50)
 		{
@@ -117,6 +118,7 @@ public class Troop {
 		{
 			colour *=0.90;
 		}
+		bulletTraceList.add(new BulletTrace(targetPosX,targetPosY, (int)position.x,(int)position.y));
 	}
 	public void addDestination(int posX,int posY)
 	{
@@ -221,5 +223,9 @@ public class Troop {
 			graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),
 					(int)(destination.get(i).rectangle.right*zoom+camera.x),(int)(destination.get(i).rectangle.bottom*zoom+camera.y)), Color.argb(100,0,255,0));
         }
+		for (int j = 0 ; j < bulletTraceList.size();j++)
+		{
+			graphics.drawLine((int)(bulletTraceList.get(j).troopPos.x*zoom+camera.x),(int)(bulletTraceList.get(j).troopPos.y*zoom+camera.y),(int)(bulletTraceList.get(j).targetPos.x*zoom+camera.x),(int)(bulletTraceList.get(j).targetPos.y*zoom+camera.y),Color.argb((int)(bulletTraceList.get(j).timer/bulletTraceList.get(j).MAX_TIMER)*255,255,255,0));
+		}
 	}
 }

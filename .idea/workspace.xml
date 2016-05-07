@@ -42,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="271" column="52" selection-start-line="271" selection-start-column="52" selection-end-line="271" selection-end-column="52" />
+              <caret line="271" column="50" selection-start-line="271" selection-start-column="50" selection-end-line="271" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -53,20 +53,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Quadtree.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Quadtree.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Quadtree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5104712">
+            <state vertical-scroll-proportion="0.0">
               <caret line="207" column="48" selection-start-line="207" selection-start-column="48" selection-end-line="207" selection-end-column="48" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#627#633#0" expanded="true" />
-                <element signature="e#681#690#0" expanded="true" />
+                <element signature="e#627#633#0" expanded="false" />
+                <element signature="e#681#690#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -75,7 +76,7 @@
       <file leaf-file-name="EnemyUpdate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/EnemyUpdate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="91" column="53" selection-start-line="91" selection-start-column="53" selection-end-line="91" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="false" />
@@ -99,6 +100,10 @@
               <caret line="158" column="47" selection-start-line="158" selection-start-column="47" selection-end-line="158" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="false" />
+                <element signature="e#1126#1132#0" expanded="false" />
+                <element signature="e#1302#1309#0" expanded="false" />
+                <element signature="e#1540#1547#0" expanded="false" />
+                <element signature="e#1754#1765#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -107,20 +112,22 @@
       <file leaf-file-name="Command.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Command.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.793103">
-              <caret line="60" column="47" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="47" />
+            <state vertical-scroll-proportion="-14.44">
+              <caret line="229" column="69" selection-start-line="229" selection-start-column="69" selection-end-line="229" selection-end-column="69" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#7225#7226#0" expanded="false" />
-                <element signature="e#7250#7251#0" expanded="false" />
-                <element signature="e#7280#7281#0" expanded="false" />
-                <element signature="e#7315#7316#0" expanded="false" />
-                <element signature="e#7464#7465#0" expanded="false" />
+                <element signature="e#952#959#0" expanded="false" />
+                <element signature="e#1056#1065#0" expanded="false" />
+                <element signature="e#7436#7437#0" expanded="false" />
+                <element signature="e#7461#7462#0" expanded="false" />
                 <element signature="e#7491#7492#0" expanded="false" />
                 <element signature="e#7526#7527#0" expanded="false" />
-                <element signature="e#7552#7553#0" expanded="false" />
-                <element signature="e#7589#7590#0" expanded="false" />
-                <element signature="e#7615#7616#0" expanded="false" />
+                <element signature="e#7675#7676#0" expanded="false" />
+                <element signature="e#7702#7703#0" expanded="false" />
+                <element signature="e#7737#7738#0" expanded="false" />
+                <element signature="e#7763#7764#0" expanded="false" />
+                <element signature="e#7800#7801#0" expanded="false" />
+                <element signature="e#7826#7827#0" expanded="false" />
+                <marker date="1462629569019" expanded="false" signature="49:355" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -129,7 +136,7 @@
       <file leaf-file-name="Enemy.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Enemy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.6896553">
+            <state vertical-scroll-proportion="0.0">
               <caret line="17" column="49" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="false" />
@@ -140,32 +147,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Troop.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Troop.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="217" column="30" selection-start-line="217" selection-start-column="28" selection-end-line="217" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.55263156">
+              <caret line="227" column="202" selection-start-line="227" selection-start-column="202" selection-end-line="227" selection-end-column="202" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#5602#5603#0" expanded="false" />
-                <element signature="e#5630#5631#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#924#937#0" expanded="true" />
+                <element signature="e#5795#5796#0" expanded="true" />
+                <element signature="e#5823#5824#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidGraphics.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/implementation/AndroidGraphics.java">
+      <file leaf-file-name="BulletTrace.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/BulletTrace.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="86" selection-start-line="118" selection-start-column="86" selection-end-line="118" selection-end-column="86" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#5627#5628#0" expanded="false" />
-                <element signature="e#5663#5664#0" expanded="false" />
-                <element signature="e#5699#5700#0" expanded="false" />
-                <element signature="e#5736#5737#0" expanded="false" />
-              </folding>
+              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1453,12 +1455,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Enemy.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/EnemyUpdate.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Command.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/Graphics.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/implementation/AndroidGraphics.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Quadtree.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/BulletTrace.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Command.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java" />
       </list>
     </option>
   </component>
@@ -1476,9 +1479,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="884" />
-    <option name="width" value="884" />
-    <option name="height" value="952" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1784" />
+    <option name="height" value="968" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1503,10 +1507,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1615,6 +1618,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1850,14 +1854,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="884" y="0" width="884" height="952" extended-state="1" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1784" height="968" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="984" y="100" width="684" height="752" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.49514562" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.49303943" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985073" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4461738" sideWeight="0.42475727" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4682231" sideWeight="0.5970874" order="7" side_tool="true" content_ui="tabs" />
@@ -1865,19 +1868,20 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32684824" sideWeight="0.49514562" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0998703" sideWeight="0.4235437" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4682231" sideWeight="0.40291262" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.094827585" sideWeight="0.4235437" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46674877" sideWeight="0.40291262" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946634" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946634" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53640777" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32160804" sideWeight="0.4186893" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5359629" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32142857" sideWeight="0.4186893" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.49303943" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1903,18 +1907,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Enemy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#4414#4415#0" expanded="false" />
-            <element signature="e#4442#4443#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/import-summary.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2208,64 +2200,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/Graphics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.24">
-          <caret line="24" column="85" selection-start-line="24" selection-start-column="85" selection-end-line="24" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/implementation/AndroidGraphics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="86" selection-start-line="118" selection-start-column="86" selection-end-line="118" selection-end-column="86" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5627#5628#0" expanded="false" />
-            <element signature="e#5663#5664#0" expanded="false" />
-            <element signature="e#5699#5700#0" expanded="false" />
-            <element signature="e#5736#5737#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="158" column="47" selection-start-line="158" selection-start-column="47" selection-end-line="158" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="217" column="30" selection-start-line="217" selection-start-column="28" selection-end-line="217" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5602#5603#0" expanded="false" />
-            <element signature="e#5630#5631#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Enemy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.6896553">
-          <caret line="17" column="49" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#4414#4415#0" expanded="false" />
-            <element signature="e#4442#4443#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/EnemyUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
+        <state vertical-scroll-proportion="0.0">
           <caret line="91" column="53" selection-start-line="91" selection-start-column="53" selection-end-line="91" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="false" />
@@ -2281,31 +2218,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.793103">
-          <caret line="60" column="47" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#7225#7226#0" expanded="false" />
-            <element signature="e#7250#7251#0" expanded="false" />
-            <element signature="e#7280#7281#0" expanded="false" />
-            <element signature="e#7315#7316#0" expanded="false" />
-            <element signature="e#7464#7465#0" expanded="false" />
-            <element signature="e#7491#7492#0" expanded="false" />
-            <element signature="e#7526#7527#0" expanded="false" />
-            <element signature="e#7552#7553#0" expanded="false" />
-            <element signature="e#7589#7590#0" expanded="false" />
-            <element signature="e#7615#7616#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-17/android.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7962963">
           <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2313,10 +2229,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.54545456">
           <caret line="118" column="16" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="16" />
-          <folding>
-            <element signature="e#2813#2814#0" expanded="true" />
-            <element signature="e#2864#2865#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2324,7 +2236,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2332,7 +2243,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2340,9 +2253,88 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.32">
           <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Quadtree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="207" column="48" selection-start-line="207" selection-start-column="48" selection-end-line="207" selection-end-column="48" />
           <folding>
-            <element signature="e#715#716#0" expanded="true" />
-            <element signature="e#766#767#0" expanded="true" />
+            <element signature="e#627#633#0" expanded="false" />
+            <element signature="e#681#690#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Enemy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="49" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#4414#4415#0" expanded="false" />
+            <element signature="e#4442#4443#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/Graphics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7213578">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/framework/implementation/AndroidGraphics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3224894">
+          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="158" column="47" selection-start-line="158" selection-start-column="47" selection-end-line="158" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1126#1132#0" expanded="false" />
+            <element signature="e#1302#1309#0" expanded="false" />
+            <element signature="e#1540#1547#0" expanded="false" />
+            <element signature="e#1754#1765#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/BulletTrace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.44">
+          <caret line="229" column="69" selection-start-line="229" selection-start-column="69" selection-end-line="229" selection-end-column="69" />
+          <folding>
+            <element signature="e#952#959#0" expanded="false" />
+            <element signature="e#1056#1065#0" expanded="false" />
+            <element signature="e#7436#7437#0" expanded="false" />
+            <element signature="e#7461#7462#0" expanded="false" />
+            <element signature="e#7491#7492#0" expanded="false" />
+            <element signature="e#7526#7527#0" expanded="false" />
+            <element signature="e#7675#7676#0" expanded="false" />
+            <element signature="e#7702#7703#0" expanded="false" />
+            <element signature="e#7737#7738#0" expanded="false" />
+            <element signature="e#7763#7764#0" expanded="false" />
+            <element signature="e#7800#7801#0" expanded="false" />
+            <element signature="e#7826#7827#0" expanded="false" />
+            <marker date="1462629569019" expanded="false" signature="49:355" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -2350,19 +2342,20 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="271" column="52" selection-start-line="271" selection-start-column="52" selection-end-line="271" selection-end-column="52" />
+          <caret line="271" column="50" selection-start-line="271" selection-start-column="50" selection-end-line="271" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Quadtree.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5104712">
-          <caret line="207" column="48" selection-start-line="207" selection-start-column="48" selection-end-line="207" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.55263156">
+          <caret line="227" column="202" selection-start-line="227" selection-start-column="202" selection-end-line="227" selection-end-column="202" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#627#633#0" expanded="true" />
-            <element signature="e#681#690#0" expanded="true" />
+            <element signature="e#924#937#0" expanded="true" />
+            <element signature="e#5795#5796#0" expanded="true" />
+            <element signature="e#5823#5824#0" expanded="true" />
           </folding>
         </state>
       </provider>

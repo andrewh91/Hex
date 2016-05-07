@@ -223,6 +223,13 @@ public class Command {// this class will contain all the methods to interact
 				if (Data.troops.get(i).destination.size() > 0) {//move troops
 					Data.troops.get(i).moveTo(dt);
 				}
+				for (int j = 0 ; j <Data.troops.get(i).bulletTraceList.size();j++)
+				{
+					if(Data.troops.get(i).bulletTraceList.get(j).update(dt))
+					{
+						Data.troops.get(i).bulletTraceList.remove(j);
+					}
+				}
 			}
 			/*for(int j = 0;j<enemies.size();j++)
 			{
