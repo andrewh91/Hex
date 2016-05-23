@@ -33,6 +33,10 @@ public class Troop {
 	int margin=5,target,colour = 255;
 	List<BulletTrace> bulletTraceList = new ArrayList<BulletTrace>();
 	int weaponType;
+	int ammo,maxAmmo;
+	float bulletsThisFrame;
+	float fractionalBullets = 0;
+	float reloadTimer =0, autoReloadTimer=0,reloadThreshold, autoReloadThreashold;
 	public Troop()
 	{
 		image = Assets.menu;
@@ -57,9 +61,13 @@ public class Troop {
 		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
 
 	}
-	public Troop(String troopId,int troopSpeed,int troopWeaponType)
+	public Troop(String troopId,int troopSpeed,int troopWeaponType, int maxammo,float tReload, float tAutoReload)
 	{
 		id=troopId;
+		ammo=maxammo;
+		maxAmmo=maxammo;
+		 reloadThreshold = tReload;
+		 autoReloadThreashold = tAutoReload;
 		speed = troopSpeed;
 		weaponType = troopWeaponType;
 		paint = new Paint();
@@ -118,6 +126,7 @@ public class Troop {
 		{
 			colour *=0.90;
 		}
+
 		bulletTraceList.add(new BulletTrace(targetPosX,targetPosY, (int)position.x,(int)position.y));
 	}
 	public void addDestination(int posX,int posY)
@@ -217,7 +226,7 @@ public class Troop {
 		//text = "timer"+fireTimer+" target "+targetAcquired+" "+target;
 		//text=getText()+"1";
 		//graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
-		graphics.drawString(id, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
+		graphics.drawString(id+reloadTimer, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {
 			graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),

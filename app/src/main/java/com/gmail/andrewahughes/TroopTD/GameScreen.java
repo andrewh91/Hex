@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.util.Log;
 
 import com.gmail.andrewahughes.framework.Game;
 import com.gmail.andrewahughes.framework.Graphics;
@@ -84,6 +83,7 @@ public class GameScreen extends Screen {
 		// c = new Rect();
 
 		//Data.save(game.getFileIO());
+		Data.loadWeapon(game.getFileIO());
 		Data.loadTroop(game.getFileIO());
 		Data.loadPath(game.getFileIO());
 		Data.load(game.getFileIO());
@@ -127,7 +127,7 @@ public class GameScreen extends Screen {
 		//Data.load(game.getFileIO());
 		command.update(deltaTime);
 		enemyUpdate.update(deltaTime);
-		troopInteractionUpdate(Data.troops,Data.enemies,deltaTime);
+		troopInteractionUpdate(Data.troops,Data.enemies,Data.weaponList,deltaTime);
 		//interaction between enemy and troop
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -241,7 +241,7 @@ public class GameScreen extends Screen {
 		// For example, robot.update();
 	}
 
-	private void troopInteractionUpdate(List<Troop>troop,List<Enemy>enemy ,float deltaTime) {
+	private void troopInteractionUpdate(List<Troop>troop,List<Enemy>enemy ,List<Weapon> weapons,float deltaTime) {
 		//collision detection quad tree////////////////////
 		quad.clear();
 		//add all objects
@@ -254,7 +254,24 @@ public class GameScreen extends Screen {
 		List<Integer> a = new ArrayList();
 		for (int i = 0; i < troop.size(); i++) {
 			if (troop.get(i).alive) {
+				if(troop.get(i).ammo<1){
+					troop.get(i).reloadTimer+=deltaTime;
+				}
+				if(troop.get(i).reloadTimer>troop.get(i).reloadThreshold)
+				{
+					troop.get(i).ammo=troop.get(i).maxAmmo;
+					troop.get(i).reloadTimer=0;
+				}
 				if (!troop.get(i).targetAcquired) {//if no target acquired
+					if(troop.get(i).autoReloadTimer >troop.get(i).autoReloadThreashold&&troop.get(i).ammo<troop.get(i).maxAmmo)
+					{
+						troop.get(i).ammo = troop.get(i).maxAmmo;
+						troop.get(i).autoReloadTimer=0;
+					}
+					else
+					{
+						troop.get(i).autoReloadTimer +=deltaTime;
+					}
 					returnObjects.clear();
 					a.clear();
 					quad.retrieve(returnObjects, troop.get(i).rangeRect,a);
@@ -268,15 +285,27 @@ public class GameScreen extends Screen {
 						}
 					}
 				} else {
-					if (troop.get(i).fireTimer < 0) {
-						troop.get(i).fireTimer = 50;
-						troop.get(i).fire((int)enemy.get(troop.get(i).target).position.x,(int)enemy.get(troop.get(i).target).position.y);
-						enemy.get(troop.get(i).target).hit();
-					}
-					if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-							enemy.get(troop.get(i).target).health <= 0) {
-						troop.get(i).targetAcquired = false;
-						troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
+					if (troop.get(i).ammo >0) {
+						//if (troop.get(i).fireTimer < 0) {
+						//troop.get(i).fireTimer = weapons.get(troop.get(i).weaponType).delayBetweenShots;
+
+						troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;
+						int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+						troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+						for (int j = wholeBulletsThisFrame; j > 0; j--) {
+							if (enemy.get(troop.get(i).target).alive) {
+								troop.get(i).fire((int) enemy.get(troop.get(i).target).position.x, (int) enemy.get(troop.get(i).target).position.y);
+								enemy.get(troop.get(i).target).hit(weapons.get(troop.get(i).weaponType).damage);
+								troop.get(i).ammo--;
+							}
+						}
+
+						//}
+						if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
+								enemy.get(troop.get(i).target).health <= 0) {
+							troop.get(i).targetAcquired = false;
+							troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
+						}
 					}
 				}
 			}

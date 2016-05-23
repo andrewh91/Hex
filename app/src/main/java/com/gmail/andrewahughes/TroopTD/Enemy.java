@@ -58,9 +58,9 @@ public class Enemy {
 		spawned=false;
 		
 	}
-	public void hit()
+	public void hit(int damage)
 	{
-		health--;
+		health-=damage;
 		colour=colour-25;
 		if (health<=0)
 		{

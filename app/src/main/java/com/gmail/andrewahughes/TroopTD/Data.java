@@ -57,8 +57,19 @@ public class Data {
     public static int troopWeaponType;
 
 
+    public static List<Weapon> weaponList = new ArrayList<Weapon>();
+
+
     public static List<EnemyType> enemyTypeList = new ArrayList<EnemyType>();
 
+
+    public static int damage;
+    public static int penetration;
+    public static int splash;
+    public static int delayBetweenShots;
+    public static int ammo;
+    public static int reload;
+    public static int autoReload;
 
     public static void save(FileIO files) {
         BufferedWriter out = null;
@@ -155,7 +166,7 @@ public class Data {
 
 
                 posX=pathList.get(pathType).pointList.get(0).x;
-                posY=pathList.get(pathType).pointList.get(0).y;;
+                posY=pathList.get(pathType).pointList.get(0).y;
                 enemies.add(new Enemy(pathType,delay,enemyType,posX,posY));
                 //load path .txt and enemy.txt if necessary
 
@@ -288,8 +299,55 @@ public class Data {
                 troopWeaponType = Integer.parseInt(line);
                 line = in.readLine();
 
-                troops.add(new Troop(troopId,troopSpeed, troopWeaponType));
+                troops.add(new Troop(troopId,troopSpeed, troopWeaponType,weaponList.get(troopWeaponType).ammo,weaponList.get(troopWeaponType).reload,weaponList.get(troopWeaponType).autoReload));
 
+            }
+        } catch (IOException e) {
+            // Catches errors. Default values are used.
+        } catch (NumberFormatException e) {
+            // Catches errors. Default values are used.
+        } finally {
+            try {
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    public static void loadWeapon(FileIO files) {
+        BufferedReader in = null;
+        try {
+            // Reads file called Save Data
+            in = new BufferedReader(new InputStreamReader(
+                    files.readFile("weapon.txt")));
+
+            // Loads values from the file and replaces default values.
+            //soundEnabled = Boolean.parseBoolean(in.readLine());
+            //currentLevel = Integer.parseInt(in.readLine());
+
+
+            String line=in.readLine();
+            int j=0;
+            while(line!=null)
+            {
+                damage = Integer.parseInt(line);
+                line = in.readLine();
+                penetration = Integer.parseInt(line);
+                line = in.readLine();
+                splash = Integer.parseInt(line);
+                line = in.readLine();
+                delayBetweenShots = Integer.parseInt(line);
+                line = in.readLine();
+                ammo = Integer.parseInt(line);
+                line = in.readLine();
+                reload = Integer.parseInt(line);
+                line = in.readLine();
+                autoReload = Integer.parseInt(line);
+                line = in.readLine();
+
+
+                weaponList.add(new Weapon(damage, penetration, splash, delayBetweenShots, ammo,reload, autoReload));
             }
         } catch (IOException e) {
             // Catches errors. Default values are used.
