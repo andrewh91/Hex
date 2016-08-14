@@ -263,7 +263,7 @@ public class GameScreen extends Screen {
 					troop.get(i).reloadTimer=0;
 				}
 				if (!troop.get(i).targetAcquired) {//if no target acquired
-					if(troop.get(i).autoReloadTimer >troop.get(i).autoReloadThreashold&&troop.get(i).ammo<troop.get(i).maxAmmo)
+					if(troop.get(i).autoReloadTimer >troop.get(i).autoReloadThreashold&&troop.get(i).ammo<troop.get(i).maxAmmo)//automatically reload if you are waiting around with no target for long enough
 					{
 						troop.get(i).ammo = troop.get(i).maxAmmo;
 						troop.get(i).autoReloadTimer=0;
@@ -274,37 +274,60 @@ public class GameScreen extends Screen {
 					}
 					returnObjects.clear();
 					a.clear();
-					quad.retrieve(returnObjects, troop.get(i).rangeRect,a);
-					for (int j = 0; j < returnObjects.size(); j++) {
+					quad.retrieve(returnObjects, troop.get(i).rangeRect,a);//check for potential targets
+					for (int j = 0; j < returnObjects.size(); j++) {//for each potential target
 						// Run collision detection algorithm between objects
-						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//if an alive enemy is in range
+						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//find the closest enemy out of all potential targets
 
 							troop.get(i).target =a.get(j);
 							troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY()));
 							troop.get(i).targetAcquired = true;
 						}
 					}
-				} else {
-					if (troop.get(i).ammo >0) {
+				} else {//if target IS acquired
+					if (troop.get(i).ammo >0) {//if we have any bullets
 						//if (troop.get(i).fireTimer < 0) {
 						//troop.get(i).fireTimer = weapons.get(troop.get(i).weaponType).delayBetweenShots;
+						if(true) {//if we're using a shotgun
+							//check angle between target and north (or east)
+							float angle = (float)Math.atan2(enemy.get(troop.get(i).target).position.y,enemy.get(troop.get(i).target).position.x);//atan2 calculates the angle between vector facing east from the origin and the given position
+							for(int j = 0; j < returnObjects.size(); j++) {							//check one cone of fire either side of the target
+								if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).range*troop.get(i).range) {//find objects in range
+									if (angle-(float)Math.atan2(enemy.get(j).position.y,enemy.get(j).position.x)<angle-0.3926991)//if enemy is within 22.5 degree cone (0.3926991 radians) anticlockwise
+									{
 
-						troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;
-						int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
-						troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
-						for (int j = wholeBulletsThisFrame; j > 0; j--) {
-							if (enemy.get(troop.get(i).target).alive) {
-								troop.get(i).fire((int) enemy.get(troop.get(i).target).position.x, (int) enemy.get(troop.get(i).target).position.y);
-								enemy.get(troop.get(i).target).hit(weapons.get(troop.get(i).weaponType).damage);
-								troop.get(i).ammo--;
+									}
+									else if(angle+(float)Math.atan2(enemy.get(j).position.y,enemy.get(j).position.x)>angle-0.3926991)//if enemy is within 22.5 degree cone (0.3926991 radians) clockwise
+									{
+
+									}
+								}
 							}
-						}
+							//check which cone of fire has fewer targets, select this
+							//for each target in the selected cone of fire...
+							//... count targets in a cone of fire starting from this target, add all the targets from the best cone of fire to the target list
 
-						//}
-						if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-								enemy.get(troop.get(i).target).health <= 0) {
-							troop.get(i).targetAcquired = false;
-							troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
+						}
+						else
+						{
+
+							troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
+							int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+							troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+							for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
+								if (enemy.get(troop.get(i).target).alive) {//fire at the target
+									troop.get(i).fire((int) enemy.get(troop.get(i).target).position.x, (int) enemy.get(troop.get(i).target).position.y);
+									enemy.get(troop.get(i).target).hit(weapons.get(troop.get(i).weaponType).damage);
+									troop.get(i).ammo--;
+								}
+							}
+
+							//}
+							if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
+									enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
+								troop.get(i).targetAcquired = false;
+								troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
+							}
 						}
 					}
 				}
