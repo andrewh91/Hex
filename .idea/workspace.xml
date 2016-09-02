@@ -44,18 +44,18 @@
       <file leaf-file-name="GameScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2363183">
-              <caret line="316" column="32" selection-start-line="316" selection-start-column="32" selection-end-line="316" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.960199">
+              <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15855#16094#0" expanded="true" />
-                <element signature="e#16093#16094#0" expanded="true" />
-                <element signature="e#16134#16369#0" expanded="true" />
-                <element signature="e#16368#16369#0" expanded="true" />
-                <element signature="e#18498#18737#0" expanded="true" />
-                <element signature="e#18736#18737#0" expanded="true" />
-                <element signature="e#18777#19012#0" expanded="true" />
-                <element signature="e#19011#19012#0" expanded="true" />
+                <element signature="e#16821#17060#0" expanded="true" />
+                <element signature="e#17059#17060#0" expanded="true" />
+                <element signature="e#17100#17335#0" expanded="true" />
+                <element signature="e#17334#17335#0" expanded="true" />
+                <element signature="e#19498#19737#0" expanded="true" />
+                <element signature="e#19736#19737#0" expanded="true" />
+                <element signature="e#19777#20012#0" expanded="true" />
+                <element signature="e#20011#20012#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,15 +89,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="322" column="51" selection-start-line="322" selection-start-column="51" selection-end-line="322" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1126#1132#0" expanded="false" />
-                <element signature="e#1302#1309#0" expanded="false" />
-                <element signature="e#1540#1547#0" expanded="false" />
-                <element signature="e#1748#1756#0" expanded="false" />
-                <element signature="e#1825#1836#0" expanded="false" />
-              </folding>
+              <caret line="160" column="48" selection-start-line="160" selection-start-column="48" selection-end-line="160" selection-end-column="48" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -140,8 +133,8 @@
       <file leaf-file-name="Troop.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.72">
-              <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
+            <state vertical-scroll-proportion="-3.4">
+              <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
               <folding>
                 <element signature="e#611#620#0" expanded="true" />
               </folding>
@@ -1847,6 +1840,7 @@
     <frame x="-8" y="-8" width="1784" height="1008" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="785" y="246" width="684" height="752" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.49514562" order="7" side_tool="false" content_ui="tabs" />
@@ -1858,7 +1852,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.09389672" sideWeight="0.4235437" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46596244" sideWeight="0.40291262" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46596244" sideWeight="0.40291262" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1866,7 +1860,6 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5359629" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32042253" sideWeight="0.4186893" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="785" y="246" width="684" height="752" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1892,27 +1885,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java</url>
-          <line>336</line>
+          <line>393</line>
           <properties />
-          <option name="timeStamp" value="129" />
+          <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java</url>
-          <line>350</line>
+          <line>359</line>
           <properties />
-          <option name="timeStamp" value="140" />
+          <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java</url>
-          <line>344</line>
+          <line>507</line>
           <properties />
-          <option name="timeStamp" value="149" />
+          <option name="timeStamp" value="175" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="150" />
+      <option name="time" value="177" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1923,14 +1916,14 @@
           <caret line="244" column="17" selection-start-line="244" selection-start-column="17" selection-end-line="244" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15855#16094#0" expanded="true" />
-            <element signature="e#16093#16094#0" expanded="true" />
-            <element signature="e#16134#16369#0" expanded="true" />
-            <element signature="e#16368#16369#0" expanded="true" />
-            <element signature="e#18498#18737#0" expanded="true" />
-            <element signature="e#18736#18737#0" expanded="true" />
-            <element signature="e#18777#19012#0" expanded="true" />
-            <element signature="e#19011#19012#0" expanded="true" />
+            <element signature="e#16821#17060#0" expanded="true" />
+            <element signature="e#17059#17060#0" expanded="true" />
+            <element signature="e#17100#17335#0" expanded="true" />
+            <element signature="e#17334#17335#0" expanded="true" />
+            <element signature="e#19498#19737#0" expanded="true" />
+            <element signature="e#19736#19737#0" expanded="true" />
+            <element signature="e#19777#20012#0" expanded="true" />
+            <element signature="e#20011#20012#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1993,14 +1986,14 @@
           <caret line="119" column="45" selection-start-line="119" selection-start-column="45" selection-end-line="119" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15855#16094#0" expanded="true" />
-            <element signature="e#16093#16094#0" expanded="true" />
-            <element signature="e#16134#16369#0" expanded="true" />
-            <element signature="e#16368#16369#0" expanded="true" />
-            <element signature="e#18498#18737#0" expanded="true" />
-            <element signature="e#18736#18737#0" expanded="true" />
-            <element signature="e#18777#19012#0" expanded="true" />
-            <element signature="e#19011#19012#0" expanded="true" />
+            <element signature="e#16821#17060#0" expanded="true" />
+            <element signature="e#17059#17060#0" expanded="true" />
+            <element signature="e#17100#17335#0" expanded="true" />
+            <element signature="e#17334#17335#0" expanded="true" />
+            <element signature="e#19498#19737#0" expanded="true" />
+            <element signature="e#19736#19737#0" expanded="true" />
+            <element signature="e#19777#20012#0" expanded="true" />
+            <element signature="e#20011#20012#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2045,14 +2038,14 @@
           <caret line="72" column="28" selection-start-line="72" selection-start-column="28" selection-end-line="72" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15855#16094#0" expanded="true" />
-            <element signature="e#16093#16094#0" expanded="true" />
-            <element signature="e#16134#16369#0" expanded="true" />
-            <element signature="e#16368#16369#0" expanded="true" />
-            <element signature="e#18498#18737#0" expanded="true" />
-            <element signature="e#18736#18737#0" expanded="true" />
-            <element signature="e#18777#19012#0" expanded="true" />
-            <element signature="e#19011#19012#0" expanded="true" />
+            <element signature="e#16821#17060#0" expanded="true" />
+            <element signature="e#17059#17060#0" expanded="true" />
+            <element signature="e#17100#17335#0" expanded="true" />
+            <element signature="e#17334#17335#0" expanded="true" />
+            <element signature="e#19498#19737#0" expanded="true" />
+            <element signature="e#19736#19737#0" expanded="true" />
+            <element signature="e#19777#20012#0" expanded="true" />
+            <element signature="e#20011#20012#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2101,14 +2094,14 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15855#16094#0" expanded="true" />
-            <element signature="e#16093#16094#0" expanded="true" />
-            <element signature="e#16134#16369#0" expanded="true" />
-            <element signature="e#16368#16369#0" expanded="true" />
-            <element signature="e#18498#18737#0" expanded="true" />
-            <element signature="e#18736#18737#0" expanded="true" />
-            <element signature="e#18777#19012#0" expanded="true" />
-            <element signature="e#19011#19012#0" expanded="true" />
+            <element signature="e#16821#17060#0" expanded="true" />
+            <element signature="e#17059#17060#0" expanded="true" />
+            <element signature="e#17100#17335#0" expanded="true" />
+            <element signature="e#17334#17335#0" expanded="true" />
+            <element signature="e#19498#19737#0" expanded="true" />
+            <element signature="e#19736#19737#0" expanded="true" />
+            <element signature="e#19777#20012#0" expanded="true" />
+            <element signature="e#20011#20012#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2343,21 +2336,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="322" column="51" selection-start-line="322" selection-start-column="51" selection-end-line="322" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1126#1132#0" expanded="false" />
-            <element signature="e#1302#1309#0" expanded="false" />
-            <element signature="e#1540#1547#0" expanded="false" />
-            <element signature="e#1748#1756#0" expanded="false" />
-            <element signature="e#1825#1836#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-17/android.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35238096">
@@ -2388,10 +2366,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="160" column="48" selection-start-line="160" selection-start-column="48" selection-end-line="160" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/Troop.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.72">
-          <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
+        <state vertical-scroll-proportion="-3.4">
+          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
           <folding>
             <element signature="e#611#620#0" expanded="true" />
           </folding>
@@ -2400,18 +2386,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/andrewahughes/TroopTD/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2363183">
-          <caret line="316" column="32" selection-start-line="316" selection-start-column="32" selection-end-line="316" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.960199">
+          <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15855#16094#0" expanded="true" />
-            <element signature="e#16093#16094#0" expanded="true" />
-            <element signature="e#16134#16369#0" expanded="true" />
-            <element signature="e#16368#16369#0" expanded="true" />
-            <element signature="e#18498#18737#0" expanded="true" />
-            <element signature="e#18736#18737#0" expanded="true" />
-            <element signature="e#18777#19012#0" expanded="true" />
-            <element signature="e#19011#19012#0" expanded="true" />
+            <element signature="e#16821#17060#0" expanded="true" />
+            <element signature="e#17059#17060#0" expanded="true" />
+            <element signature="e#17100#17335#0" expanded="true" />
+            <element signature="e#17334#17335#0" expanded="true" />
+            <element signature="e#19498#19737#0" expanded="true" />
+            <element signature="e#19736#19737#0" expanded="true" />
+            <element signature="e#19777#20012#0" expanded="true" />
+            <element signature="e#20011#20012#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -260,7 +260,6 @@ public class GameScreen extends Screen {
 		List<Integer> firingList = new ArrayList();//a list of objects to fire at
 		List<Integer> tempFiringList = new ArrayList();//a second list so we can compare lists and see which one has more objects
 		float cone = 0.3926991f;//22.5 degrees
-
 		for (int i = 0; i < troop.size(); i++) {
 			if (troop.get(i).alive) {
 				if(troop.get(i).ammo<1){
@@ -294,9 +293,12 @@ public class GameScreen extends Screen {
 						}
 						if (true)//shotgun
 						{
+
 							if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).range*troop.get(i).range) //find all enemies in range
 								{
-									troop.get(i).targets.add(a.get(j));//the return objects list and the 'a' list are shared among all troops, it can be wiped and by one troop when the other was still using it, best to store a copy of it for each troop, like how we store the target variable
+									if (!troop.get(i).targets.contains(a.get(j))) {
+										troop.get(i).targets.add(a.get(j));//the return objects list and the 'a' list are shared among all troops, it can be wiped and by one troop when the other was still using it, best to store a copy of it for each troop, like how we store the target variable
+									}
 								}
 						}
 					}
@@ -313,18 +315,31 @@ public class GameScreen extends Screen {
 							float primaryAngle = (float)Math.atan2(enemy.get(troop.get(i).target).position.y-troop.get(i).position.y,enemy.get(troop.get(i).target).position.x-troop.get(i).position.x);//atan2 calculates the angle between vector facing east from the origin and the given position, subtract the troop position to get the angle of the enemy from the troop
 							//this will be used to store the angle between the primary angle and each enemy in range from the troop
 							float enemyAngle = 0;
+
+							firingList.clear();
+							tempFiringList.clear();
+							antiClockwise.clear();
+							clockwise.clear();
 							for(int j = 0; j < troop.get(i).targets.size(); j++) {							//check one cone of fire either side of the target
-								
+								if (enemy.get(troop.get(i).targets.get(j)).health>0&& distanceBetween(troop.get(i).position, new PointF(enemy.get(troop.get(i).targets.get(j)).position.x,enemy.get(troop.get(i).targets.get(j)).position.y)) < troop.get(i).range*troop.get(i).range) {//find objects in range
 									enemyAngle= (float)Math.atan2(enemy.get(troop.get(i).targets.get(j)).position.y-troop.get(i).position.y,enemy.get(troop.get(i).targets.get(j)).position.x-troop.get(i).position.x);//work out the enemy's angle from east of the troop
 									if (enemyAngle-primaryAngle<0&&enemyAngle-primaryAngle>=-cone)//if enemy is within 22.5 degree cone (0.3926991 radians) anticlockwise
 									{
-										antiClockwise.add(new PointF((float)troop.get(i).targets.get(j),enemyAngle));//add the number of that enemy to the anticlockwise list and that enemy's angle from east
+										if(!antiClockwise.contains(new PointF((float)troop.get(i).targets.get(j),enemyAngle))) {
+											antiClockwise.add(new PointF((float) troop.get(i).targets.get(j), enemyAngle));//add the number of that enemy to the anticlockwise list and that enemy's angle from east
+										}
 									}
 									else if(enemyAngle-primaryAngle>=0&&enemyAngle-primaryAngle<cone)//if enemy is within 22.5 degree cone (0.3926991 radians) clockwise
 									{
-										clockwise.add(new PointF((float)troop.get(i).targets.get(j), enemyAngle));
+										if(!clockwise.contains(new PointF((float)troop.get(i).targets.get(j), enemyAngle))) {
+											clockwise.add(new PointF((float) troop.get(i).targets.get(j), enemyAngle));
+										}
 									}
-
+								}
+								else//if target is not in range
+								{
+									troop.get(i).targets.remove(j);
+								}
 							}
 							//check which cone of fire has fewer targets, select this
 							//for each target in the selected cone of fire...
@@ -343,8 +358,11 @@ public class GameScreen extends Screen {
 									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
 									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
 										for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
-											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
-											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
+											if (enemy.get(firingList.get(k)).health>0) {
+												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
+												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
+											}
+
 										}
 										troop.get(i).ammo--;
 									}
@@ -358,6 +376,7 @@ public class GameScreen extends Screen {
 									troop.get(i).targetAcquired = false;
 									troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
 								}
+
 							}
 							else if (clockwise.size()==0)
 							{
@@ -373,12 +392,15 @@ public class GameScreen extends Screen {
 									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
 									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
 										for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
-											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
-											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
+											if (enemy.get(firingList.get(k)).health>0) {
+												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
+												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
+											}
 										}
 										troop.get(i).ammo--;
 									}
 									firingList.clear();
+									tempFiringList.clear();
 								}
 
 
@@ -429,6 +451,7 @@ public class GameScreen extends Screen {
 									if(tempFiringList.size()>firingList.size())//if the tempfiring list is biggest so far then set the firng list to match the temp firing list
 									{
 										firingList=tempFiringList;
+										tempFiringList.clear();
 									}
 								}
 							}
@@ -483,12 +506,15 @@ public class GameScreen extends Screen {
 								troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
 								for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
 									for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
+										if (enemy.get(firingList.get(k)).health>0) {
 											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
 											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
+										}
 									}
 										troop.get(i).ammo--;//subtract ammo for each whole bullet
 								}
 								firingList.clear();//clear firing list after all whole bullets are deal with
+								tempFiringList.clear();
 							}
 
 

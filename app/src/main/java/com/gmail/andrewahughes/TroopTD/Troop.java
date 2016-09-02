@@ -60,6 +60,7 @@ public class Troop {
 		speed = 5;
 		image = Assets.menu;
 		rectangle = new Rect(posX-margin,posY-margin,posX+image.getWidth()+margin,posY+image.getHeight()+margin);
+		targets.add(0);
 
 	}
 	public Troop(String troopId,int troopSpeed,int troopWeaponType, int maxammo,float tReload, float tAutoReload)
@@ -227,7 +228,7 @@ public class Troop {
 		//text = "timer"+fireTimer+" target "+targetAcquired+" "+target;
 		//text=getText()+"1";
 		//graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
-		graphics.drawString(id+ammo+" "+bulletsThisFrame, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
+		graphics.drawString(id+targets.size()+" ", (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {
 			graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),
