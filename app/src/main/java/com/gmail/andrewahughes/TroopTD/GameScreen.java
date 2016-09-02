@@ -292,8 +292,16 @@ public class GameScreen extends Screen {
 							troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY()));
 							troop.get(i).targetAcquired = true;
 						}
+						if (true)//shotgun
+						{
+							if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).range*troop.get(i).range) //find all enemies in range
+								{
+									troop.get(i).targets.add(a.get(j));//the return objects list and the 'a' list are shared among all troops, it can be wiped and by one troop when the other was still using it, best to store a copy of it for each troop, like how we store the target variable
+								}
+						}
 					}
-				} else {//if target IS acquired
+				}
+				if (troop.get(i).targetAcquired){//if target IS acquired
 					if (troop.get(i).ammo >0) {//if we have any bullets
 						//if (troop.get(i).fireTimer < 0) {
 						//troop.get(i).fireTimer = weapons.get(troop.get(i).weaponType).delayBetweenShots;
@@ -305,18 +313,18 @@ public class GameScreen extends Screen {
 							float primaryAngle = (float)Math.atan2(enemy.get(troop.get(i).target).position.y-troop.get(i).position.y,enemy.get(troop.get(i).target).position.x-troop.get(i).position.x);//atan2 calculates the angle between vector facing east from the origin and the given position, subtract the troop position to get the angle of the enemy from the troop
 							//this will be used to store the angle between the primary angle and each enemy in range from the troop
 							float enemyAngle = 0;
-							for(int j = 0; j < returnObjects.size(); j++) {							//check one cone of fire either side of the target
-								if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).range*troop.get(i).range) {//find objects in range
-									enemyAngle= (float)Math.atan2(enemy.get(a.get(j)).position.y-troop.get(i).position.y,enemy.get(a.get(j)).position.x-troop.get(i).position.x);//work out the enemy's angle from east of the troop
+							for(int j = 0; j < troop.get(i).targets.size(); j++) {							//check one cone of fire either side of the target
+								
+									enemyAngle= (float)Math.atan2(enemy.get(troop.get(i).targets.get(j)).position.y-troop.get(i).position.y,enemy.get(troop.get(i).targets.get(j)).position.x-troop.get(i).position.x);//work out the enemy's angle from east of the troop
 									if (enemyAngle-primaryAngle<0&&enemyAngle-primaryAngle>=-cone)//if enemy is within 22.5 degree cone (0.3926991 radians) anticlockwise
 									{
-										antiClockwise.add(new PointF((float)a.get(j),enemyAngle));//add the number of that enemy to the anticlockwise list and that enemy's angle from east
+										antiClockwise.add(new PointF((float)troop.get(i).targets.get(j),enemyAngle));//add the number of that enemy to the anticlockwise list and that enemy's angle from east
 									}
 									else if(enemyAngle-primaryAngle>=0&&enemyAngle-primaryAngle<cone)//if enemy is within 22.5 degree cone (0.3926991 radians) clockwise
 									{
-										clockwise.add(new PointF((float)a.get(j), enemyAngle));
+										clockwise.add(new PointF((float)troop.get(i).targets.get(j), enemyAngle));
 									}
-								}
+
 							}
 							//check which cone of fire has fewer targets, select this
 							//for each target in the selected cone of fire...
@@ -339,8 +347,8 @@ public class GameScreen extends Screen {
 											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 										}
 										troop.get(i).ammo--;
-										firingList.clear();
 									}
+									firingList.clear();
 								}
 
 
@@ -369,8 +377,8 @@ public class GameScreen extends Screen {
 											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 										}
 										troop.get(i).ammo--;
-										firingList.clear();
 									}
+									firingList.clear();
 								}
 
 
@@ -478,9 +486,9 @@ public class GameScreen extends Screen {
 											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
 											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 									}
-									firingList.clear();
-										troop.get(i).ammo--;
+										troop.get(i).ammo--;//subtract ammo for each whole bullet
 								}
+								firingList.clear();//clear firing list after all whole bullets are deal with
 							}
 
 

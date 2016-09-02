@@ -20,6 +20,7 @@ import android.os.Environment;
 public class Troop {
 
 	List<Destination> destination = new ArrayList<Destination>();
+	List<Integer> targets = new ArrayList<Integer>();
 	PointF position, prevPos,offSet,offSet2;
 	boolean alive = true,targetAcquired=false;
 	float speed, range = 150,closestEnemy=range*range,fireTimer=5;
