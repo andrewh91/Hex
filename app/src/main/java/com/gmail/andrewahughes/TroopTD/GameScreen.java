@@ -265,41 +265,50 @@ public class GameScreen extends Screen {
 				if(troop.get(i).ammo<1){
 					troop.get(i).reloadTimer+=deltaTime;
 				}
+				else if(troop.get(i).fireDelay>0)//if we have ammo .. and if fire delay is more than zero
+				{
+					troop.get(i).fireDelay-=deltaTime;	//reduce fire delay
+				}
+
 				if(troop.get(i).reloadTimer>troop.get(i).reloadThreshold)
 				{
 					troop.get(i).ammo=troop.get(i).maxAmmo;
 					troop.get(i).reloadTimer=0;
 				}
-				if (!troop.get(i).targetAcquired) {//if no target acquired
-					if(troop.get(i).autoReloadTimer >troop.get(i).autoReloadThreashold&&troop.get(i).ammo<troop.get(i).maxAmmo)//automatically reload if you are waiting around with no target for long enough
+				if (!troop.get(i).targetAcquired) {//if no target acquired and enough time passe then autoreload
+					if (troop.get(i).autoReloadTimer > troop.get(i).autoReloadThreashold && troop.get(i).ammo < troop.get(i).maxAmmo)//automatically reload if you are waiting around with no target for long enough
 					{
 						troop.get(i).ammo = troop.get(i).maxAmmo;
-						troop.get(i).autoReloadTimer=0;
+						troop.get(i).autoReloadTimer = 0;
+					} else {
+						troop.get(i).autoReloadTimer += deltaTime;
 					}
-					else
-					{
-						troop.get(i).autoReloadTimer +=deltaTime;
-					}
-					returnObjects.clear();
-					a.clear();
-					quad.retrieve(returnObjects, troop.get(i).rangeRect,a);//check for potential targets
-					for (int j = 0; j < returnObjects.size(); j++) {//for each potential target
-						// Run collision detection algorithm between objects
-						if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).closestEnemy) {//find the closest enemy out of all potential targets
 
-							troop.get(i).target =a.get(j);
-							troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY()));
-							troop.get(i).targetAcquired = true;
-						}
-						if (true)//shotgun
-						{
+					if(troop.get(i).fireDelay<=0)
+					{//if no target acqyuired, and we have  a bullet ready to fire
+						returnObjects.clear();
+						a.clear();
+						quad.retrieve(returnObjects, troop.get(i).rangeRect, a);//check for potential targets
 
-							if (distanceBetween(troop.get(i).position, new PointF(returnObjects.get(j).centerX(),returnObjects.get(j).centerY())) < troop.get(i).range*troop.get(i).range) //find all enemies in range
+						for (int j = 0; j < returnObjects.size(); j++) {//for each potential target
+							// Run collision detection algorithm between objects
+							if (distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y)) < troop.get(i).closestEnemy) {//find the closest enemy out of all potential targets
+
+								troop.get(i).target = a.get(j);
+								troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y));
+								troop.get(i).targetAcquired = true;
+							}
+							if (true)//shotgun
+							{
+
+								if (distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y)) < troop.get(i).range * troop.get(i).range) //find all enemies in range
 								{
-									if (!troop.get(i).targets.contains(a.get(j))) {
+									if (!troop.get(i).targets.contains(a.get(j)))
+									{
 										troop.get(i).targets.add(a.get(j));//the return objects list and the 'a' list are shared among all troops, it can be wiped and by one troop when the other was still using it, best to store a copy of it for each troop, like how we store the target variable
 									}
 								}
+							}
 						}
 					}
 				}
@@ -321,7 +330,8 @@ public class GameScreen extends Screen {
 							antiClockwise.clear();
 							clockwise.clear();
 							for(int j = 0; j < troop.get(i).targets.size(); j++) {							//check one cone of fire either side of the target
-								if (enemy.get(troop.get(i).targets.get(j)).health>0&& distanceBetween(troop.get(i).position, new PointF(enemy.get(troop.get(i).targets.get(j)).position.x,enemy.get(troop.get(i).targets.get(j)).position.y)) < troop.get(i).range*troop.get(i).range) {//find objects in range
+								if (enemy.get(troop.get(i).targets.get(j)).health>0&& distanceBetween(troop.get(i).position, new PointF(enemy.get(troop.get(i).targets.get(j)).position.x,enemy.get(troop.get(i).targets.get(j)).position.y)) < troop.get(i).range*troop.get(i).range)
+								{//find objects in range
 									enemyAngle= (float)Math.atan2(enemy.get(troop.get(i).targets.get(j)).position.y-troop.get(i).position.y,enemy.get(troop.get(i).targets.get(j)).position.x-troop.get(i).position.x);//work out the enemy's angle from east of the troop
 									if (enemyAngle-primaryAngle<0&&enemyAngle-primaryAngle>=-cone)//if enemy is within 22.5 degree cone (0.3926991 radians) anticlockwise
 									{
@@ -344,7 +354,7 @@ public class GameScreen extends Screen {
 							//check which cone of fire has fewer targets, select this
 							//for each target in the selected cone of fire...
 							//... count targets in a cone of fire starting from this target, add all the targets from the best cone of fire to the target list
-							if (antiClockwise.size()==0)
+							if (antiClockwise.size()==0&&clockwise.size()>0)
 							{
 								//fire at clockwise
 								for (int o = 0;o<clockwise.size();o++)
@@ -353,20 +363,29 @@ public class GameScreen extends Screen {
 								}
 								//shoot at firing list
 								{
+									int wholeBulletsThisFrame;
+
+
 									troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-									int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+									wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
 									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+									if(troop.get(i).fireDelay<0)
+									{
+										wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
+									}
 									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-										for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
-											if (enemy.get(firingList.get(k)).health>0) {
+										for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
+											if (enemy.get(firingList.get(k)).health > 0) {
 												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
 												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 											}
 
 										}
 										troop.get(i).ammo--;
+										troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
 									}
 									firingList.clear();
+
 								}
 
 
@@ -378,7 +397,7 @@ public class GameScreen extends Screen {
 								}
 
 							}
-							else if (clockwise.size()==0)
+							else if (clockwise.size()==0&&antiClockwise.size()>0)
 							{
 								//fire at anti clockwise
 								for (int o = 0;o<antiClockwise.size();o++)
@@ -387,20 +406,29 @@ public class GameScreen extends Screen {
 								}
 								//shoot at firing list
 								{
+									int wholeBulletsThisFrame;
+
+
 									troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-									int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+									wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
 									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+									if(troop.get(i).fireDelay<0)
+									{
+										wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
+									}
 									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-										for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
-											if (enemy.get(firingList.get(k)).health>0) {
+										for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
+											if (enemy.get(firingList.get(k)).health > 0) {
 												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
 												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 											}
+
 										}
 										troop.get(i).ammo--;
+										troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
 									}
 									firingList.clear();
-									tempFiringList.clear();
+
 								}
 
 
@@ -411,7 +439,7 @@ public class GameScreen extends Screen {
 									troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
 								}
 							}
-							else if (antiClockwise.size()<=clockwise.size())//if anti clockwise list has fewer objects or the number of objects is the same as the other list then proceed
+							else if (antiClockwise.size()<=clockwise.size()&&antiClockwise.size()>0)//if anti clockwise list has fewer objects or the number of objects is the same as the other list then proceed
 							{
 								Collections.sort(antiClockwise, new Comparator<PointF>() {//sort the anticlockwise list by the y value, which is the angle of the enemy,
 									@Override
@@ -501,20 +529,29 @@ public class GameScreen extends Screen {
 							}
 							//shoot at firing list
 							{
+								int wholeBulletsThisFrame;
+
+
 								troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-								int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+								wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
 								troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+								if(troop.get(i).fireDelay<0)
+								{
+									wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
+								}
 								for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-									for(int k =0;k<firingList.size();k++){//hit each enemy in firing list
-										if (enemy.get(firingList.get(k)).health>0) {
+									for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
+										if (enemy.get(firingList.get(k)).health > 0) {
 											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
 											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
 										}
+
 									}
-										troop.get(i).ammo--;//subtract ammo for each whole bullet
+									troop.get(i).ammo--;
+									troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
 								}
-								firingList.clear();//clear firing list after all whole bullets are deal with
-								tempFiringList.clear();
+								firingList.clear();
+
 							}
 
 
@@ -529,15 +566,20 @@ public class GameScreen extends Screen {
 						//end of shotgun logic
 						else
 						{
-
+							int wholeBulletsThisFrame =0;
 							troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-							int wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
+							wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
 							troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
+							if(troop.get(i).fireDelay<0)
+							{
+								wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
+							}
 							for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
 								if (enemy.get(troop.get(i).target).alive) {//fire at the target
 									troop.get(i).fire((int) enemy.get(troop.get(i).target).position.x, (int) enemy.get(troop.get(i).target).position.y);
 									enemy.get(troop.get(i).target).hit(weapons.get(troop.get(i).weaponType).damage);
 									troop.get(i).ammo--;
+									troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
 								}
 							}
 
