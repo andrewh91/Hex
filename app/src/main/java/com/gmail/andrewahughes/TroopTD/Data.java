@@ -63,13 +63,16 @@ public class Data {
     public static List<EnemyType> enemyTypeList = new ArrayList<EnemyType>();
 
 
+    public static int ammoType;
     public static int damage;
     public static int penetration;
     public static int splash;
+    public static int cone;
     public static int delayBetweenShots;
     public static int ammo;
     public static int reload;
     public static int autoReload;
+    public static int range;
 
     public static void save(FileIO files) {
         BufferedWriter out = null;
@@ -299,7 +302,7 @@ public class Data {
                 troopWeaponType = Integer.parseInt(line);
                 line = in.readLine();
 
-                troops.add(new Troop(troopId,troopSpeed, troopWeaponType,weaponList.get(troopWeaponType).ammo,weaponList.get(troopWeaponType).reload,weaponList.get(troopWeaponType).autoReload));
+                troops.add(new Troop(troopId,troopSpeed, troopWeaponType,weaponList.get(troopWeaponType).ammo,weaponList.get(troopWeaponType).reload,weaponList.get(troopWeaponType).autoReload,weaponList.get(troopWeaponType).delayBetweenShots,weaponList.get(troopWeaponType).range));
 
             }
         } catch (IOException e) {
@@ -331,11 +334,16 @@ public class Data {
             int j=0;
             while(line!=null)
             {
+
+                ammoType = Integer.parseInt(line);//0 for normal bullet, 1 for shotgun,
+                line = in.readLine();
                 damage = Integer.parseInt(line);
                 line = in.readLine();
                 penetration = Integer.parseInt(line);
                 line = in.readLine();
-                splash = Integer.parseInt(line);
+                splash = Integer.parseInt(line);//only works for explosive ammo types
+                line = in.readLine();
+                cone = Integer.parseInt(line);//only works if shotgun ammo type
                 line = in.readLine();
                 delayBetweenShots = Integer.parseInt(line);
                 line = in.readLine();
@@ -345,9 +353,12 @@ public class Data {
                 line = in.readLine();
                 autoReload = Integer.parseInt(line);
                 line = in.readLine();
+                range = Integer.parseInt(line);
+                line = in.readLine();
 
 
-                weaponList.add(new Weapon(damage, penetration, splash, delayBetweenShots, ammo,reload, autoReload));
+
+                weaponList.add(new Weapon(ammoType,damage, penetration, splash,cone, delayBetweenShots, ammo,reload, autoReload,range));
             }
         } catch (IOException e) {
             // Catches errors. Default values are used.

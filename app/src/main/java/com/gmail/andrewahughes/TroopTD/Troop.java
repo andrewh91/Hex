@@ -23,7 +23,8 @@ public class Troop {
 	List<Integer> targets = new ArrayList<Integer>();
 	PointF position, prevPos,offSet,offSet2;
 	boolean alive = true,targetAcquired=false;
-	float speed, range = 150,closestEnemy=range*range,fireTimer=5,fireDelay = 100,fireDelayReset=100;
+	float speed,fireTimer=5,fireDelay ,fireDelayReset;
+	float range=1, closestEnemy=1;
 	double length;
 	PointF direction;
 	Rect rectangle,rangeRect;
@@ -63,13 +64,15 @@ public class Troop {
 		targets.add(0);
 
 	}
-	public Troop(String troopId,int troopSpeed,int troopWeaponType, int maxammo,float tReload, float tAutoReload)
+	public Troop(String troopId,int troopSpeed,int troopWeaponType, int maxammo,float tReload, float tAutoReload,int tDelayBetweenShots, int tRange)
 	{
 		id=troopId;
 		ammo=maxammo;
 		maxAmmo=maxammo;
 		 reloadThreshold = tReload;
 		 autoReloadThreashold = tAutoReload;
+		fireDelay=tDelayBetweenShots;
+		fireDelayReset=tDelayBetweenShots;
 		speed = troopSpeed;
 		weaponType = troopWeaponType;
 		paint = new Paint();
@@ -84,7 +87,8 @@ public class Troop {
 		offSet2 =new PointF(0,0);
 		image = Assets.menu;
 		rectangle = new Rect(0,0,0,0);
-
+		range = tRange;
+		closestEnemy=range*range;
 		rangeRect = new Rect((int)position.x-((int)range),(int)position.y-((int)range),(int)position.x+((int)range),(int)position.y+((int)range));
 
 	}
@@ -118,6 +122,8 @@ public class Troop {
 		}
 		return text.toString();
 	}
+
+
 	public void fire(int targetPosX,int targetPosY )
 	{
 		if(colour<50)
@@ -228,7 +234,7 @@ public class Troop {
 		//text = "timer"+fireTimer+" target "+targetAcquired+" "+target;
 		//text=getText()+"1";
 		//graphics.drawString(text, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
-		graphics.drawString(id+" "+fireDelay, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
+		graphics.drawString("ammo "+ammo+" fire delay "+fireDelay, (int)(position.x*zoom+camera.x), (int)(position.y*zoom+camera.y), paint);
         int len = destination.size();
         for (int i = 0; i < len; i++) {
 			graphics.drawRect(new Rect((int)(destination.get(i).rectangle.left*zoom+camera.x),(int)(destination.get(i).rectangle.top*zoom+camera.y),

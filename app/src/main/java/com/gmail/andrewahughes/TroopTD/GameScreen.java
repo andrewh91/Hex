@@ -252,30 +252,26 @@ public class GameScreen extends Screen {
 				quad.insert(enemy.get(i).rectangle,i);
 			}
 		}
-		List<Rect> returnObjects = new ArrayList();
-		List<Integer> a = new ArrayList();
-
-		List<PointF> antiClockwise = new ArrayList();//This is not a point like a cartesian point, i just need 2 variables, stores a list of enemies within shotgun cone of fire and that enemy's angle relative to the primary target from the troop
-		List<PointF> clockwise = new ArrayList();//same as above
-		List<Integer> firingList = new ArrayList();//a list of objects to fire at
-		List<Integer> tempFiringList = new ArrayList();//a second list so we can compare lists and see which one has more objects
-		float cone = 0.3926991f;//22.5 degrees
+		List<Rect> returnObjects = new ArrayList();//this is a list of objects that are potentially in range of the troop
+		List<Integer> a = new ArrayList();//ths gives the position of the returned enemy's index number from it's own enemy list rather than the index of it's position in the returned objects list
+		List<Integer> firingList = new ArrayList();//a list of objects to fire at for multi hit weapons like shotguns
+		//float cone = 0.3926991f;//22.5 degrees = 0.3926991 radians
 		for (int i = 0; i < troop.size(); i++) {
 			if (troop.get(i).alive) {
 				if(troop.get(i).ammo<1){
-					troop.get(i).reloadTimer+=deltaTime;
+					troop.get(i).reloadTimer+=deltaTime;//for each troop that is alive and has no bullets, increase the reload timer
 				}
-				else if(troop.get(i).fireDelay>0)//if we have ammo .. and if fire delay is more than zero
+				else if(troop.get(i).fireDelay>0)
 				{
-					troop.get(i).fireDelay-=deltaTime;	//reduce fire delay
+					troop.get(i).fireDelay-=deltaTime;//for each troop that is alive and has at least one bullet and the fire delay is above 0 then reduce the fire delay
 				}
 
 				if(troop.get(i).reloadTimer>troop.get(i).reloadThreshold)
 				{
 					troop.get(i).ammo=troop.get(i).maxAmmo;
-					troop.get(i).reloadTimer=0;
+					troop.get(i).reloadTimer=0;//for each troop that is alive and the reload timer reaches the reload threshold, reload ammo and reset reload timer
 				}
-				if (!troop.get(i).targetAcquired) {//if no target acquired and enough time passe then autoreload
+				if (!troop.get(i).targetAcquired) {//if no target acquired
 					if (troop.get(i).autoReloadTimer > troop.get(i).autoReloadThreashold && troop.get(i).ammo < troop.get(i).maxAmmo)//automatically reload if you are waiting around with no target for long enough
 					{
 						troop.get(i).ammo = troop.get(i).maxAmmo;
@@ -285,312 +281,70 @@ public class GameScreen extends Screen {
 					}
 
 					if(troop.get(i).fireDelay<=0)
-					{//if no target acqyuired, and we have  a bullet ready to fire
+					{//if no target acqyuired, and we have  a bullet ready to fire, then look for a target
 						returnObjects.clear();
 						a.clear();
 						quad.retrieve(returnObjects, troop.get(i).rangeRect, a);//check for potential targets
 
-						for (int j = 0; j < returnObjects.size(); j++) {//for each potential target
-							// Run collision detection algorithm between objects
-							if (distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y)) < troop.get(i).closestEnemy) {//find the closest enemy out of all potential targets
+						if (weapons.get(troop.get(i).weaponType).ammoType==0)//normal bullet target acquiring logic
+						{
+							for (int j = 0; j < returnObjects.size(); j++) {//for each potential target
+								// Run collision detection algorithm between objects
+								if (distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y)) < troop.get(i).closestEnemy)
+								{//find the closest enemy out of all potential targets
 
-								troop.get(i).target = a.get(j);
-								troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y));
-								troop.get(i).targetAcquired = true;
-							}
-							if (true)//shotgun
-							{
+									troop.get(i).target = a.get(j);//set the target as the closest target
+									troop.get(i).closestEnemy = distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y));//set the variable for the closest enemy
+									troop.get(i).targetAcquired = true;
 
-								if (distanceBetween(troop.get(i).position, new PointF(enemy.get(a.get(j)).position.x, enemy.get(a.get(j)).position.y)) < troop.get(i).range * troop.get(i).range) //find all enemies in range
-								{
-									if (!troop.get(i).targets.contains(a.get(j)))
-									{
-										troop.get(i).targets.add(a.get(j));//the return objects list and the 'a' list are shared among all troops, it can be wiped and by one troop when the other was still using it, best to store a copy of it for each troop, like how we store the target variable
-									}
 								}
-							}
-						}
-					}
-				}
+
+							}//end of for each return object
+						}//end of ammo type 0
+						else if(weapons.get(troop.get(i).weaponType).ammoType==1)//shotgun target acquiring logic
+						{
+
+						}//end of ammo type 1
+					}//end of if fireDelay<=0
+				}//end of it no target acquired
 				if (troop.get(i).targetAcquired){//if target IS acquired
+					troop.get(i).autoReloadTimer=0;//acquiring a target will reset the autoreload timer
+
 					if (troop.get(i).ammo >0) {//if we have any bullets
 						//if (troop.get(i).fireTimer < 0) {
 						//troop.get(i).fireTimer = weapons.get(troop.get(i).weaponType).delayBetweenShots;
-
-						//shotgun
-						if(true) {//if we're using a shotgun
-							//check angle between line drawn from primary target to the troop and line drawn from troop to
-							// .east of the troop
-							float primaryAngle = (float)Math.atan2(enemy.get(troop.get(i).target).position.y-troop.get(i).position.y,enemy.get(troop.get(i).target).position.x-troop.get(i).position.x);//atan2 calculates the angle between vector facing east from the origin and the given position, subtract the troop position to get the angle of the enemy from the troop
-							//this will be used to store the angle between the primary angle and each enemy in range from the troop
-							float enemyAngle = 0;
-
-							firingList.clear();
-							tempFiringList.clear();
-							antiClockwise.clear();
-							clockwise.clear();
-							for(int j = 0; j < troop.get(i).targets.size(); j++) {							//check one cone of fire either side of the target
-								if (enemy.get(troop.get(i).targets.get(j)).health>0&& distanceBetween(troop.get(i).position, new PointF(enemy.get(troop.get(i).targets.get(j)).position.x,enemy.get(troop.get(i).targets.get(j)).position.y)) < troop.get(i).range*troop.get(i).range)
-								{//find objects in range
-									enemyAngle= (float)Math.atan2(enemy.get(troop.get(i).targets.get(j)).position.y-troop.get(i).position.y,enemy.get(troop.get(i).targets.get(j)).position.x-troop.get(i).position.x);//work out the enemy's angle from east of the troop
-									if (enemyAngle-primaryAngle<0&&enemyAngle-primaryAngle>=-cone)//if enemy is within 22.5 degree cone (0.3926991 radians) anticlockwise
-									{
-										if(!antiClockwise.contains(new PointF((float)troop.get(i).targets.get(j),enemyAngle))) {
-											antiClockwise.add(new PointF((float) troop.get(i).targets.get(j), enemyAngle));//add the number of that enemy to the anticlockwise list and that enemy's angle from east
-										}
-									}
-									else if(enemyAngle-primaryAngle>=0&&enemyAngle-primaryAngle<cone)//if enemy is within 22.5 degree cone (0.3926991 radians) clockwise
-									{
-										if(!clockwise.contains(new PointF((float)troop.get(i).targets.get(j), enemyAngle))) {
-											clockwise.add(new PointF((float) troop.get(i).targets.get(j), enemyAngle));
-										}
-									}
-								}
-								else//if target is not in range
-								{
-									troop.get(i).targets.remove(j);
-								}
-							}
-							//check which cone of fire has fewer targets, select this
-							//for each target in the selected cone of fire...
-							//... count targets in a cone of fire starting from this target, add all the targets from the best cone of fire to the target list
-							if (antiClockwise.size()==0&&clockwise.size()>0)
-							{
-								//fire at clockwise
-								for (int o = 0;o<clockwise.size();o++)
-								{
-									firingList.add((int)clockwise.get(o).x);
-								}
-								//shoot at firing list
-								{
-									int wholeBulletsThisFrame;
-
-
-									troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-									wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
-									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
-									if(troop.get(i).fireDelay<0)
-									{
-										wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
-									}
-									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-										for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
-											if (enemy.get(firingList.get(k)).health > 0) {
-												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
-												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
-											}
-
-										}
-										troop.get(i).ammo--;
-										troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
-									}
-									firingList.clear();
-
-								}
-
-
-								if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-										enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
-
-									troop.get(i).targetAcquired = false;
-									troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
-								}
-
-							}
-							else if (clockwise.size()==0&&antiClockwise.size()>0)
-							{
-								//fire at anti clockwise
-								for (int o = 0;o<antiClockwise.size();o++)
-								{
-									firingList.add((int)antiClockwise.get(o).x);
-								}
-								//shoot at firing list
-								{
-									int wholeBulletsThisFrame;
-
-
-									troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-									wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
-									troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
-									if(troop.get(i).fireDelay<0)
-									{
-										wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
-									}
-									for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-										for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
-											if (enemy.get(firingList.get(k)).health > 0) {
-												troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
-												enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
-											}
-
-										}
-										troop.get(i).ammo--;
-										troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
-									}
-									firingList.clear();
-
-								}
-
-
-								if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-										enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
-
-									troop.get(i).targetAcquired = false;
-									troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
-								}
-							}
-							else if (antiClockwise.size()<=clockwise.size()&&antiClockwise.size()>0)//if anti clockwise list has fewer objects or the number of objects is the same as the other list then proceed
-							{
-								Collections.sort(antiClockwise, new Comparator<PointF>() {//sort the anticlockwise list by the y value, which is the angle of the enemy,
-									@Override
-									public int compare(PointF p1, PointF p2) {
-										return Float.compare(p1.y,p2.y);
-									}
-								});
-
-								Collections.sort(clockwise, new Comparator<PointF>() {//sort the clockwise list by the y value, which is the angle of the enemy,
-									@Override
-									public int compare(PointF p1, PointF p2) {
-										return Float.compare(p1.y,p2.y);
-									}
-								});
-
-								for (int k = antiClockwise.size()-1;k>0;k--)//for all the objects in this list - starting witht the last - most clockwise object
-								{
-									for (int l = 0; l < clockwise.size();l++)//for all the objects in the other list - starting with the first, anticlockwise most object
-									{
-										if(clockwise.get(l).y<antiClockwise.get(k).y+cone*2)//if the anlge of the object in the clockwise list is less than the angle of the object in the anticlockwise list plus the firing cone, then ...
-										{//the enemy in the clockwise list (l) is in range, add it and all other more anticlockwise enemies in the clockwise list (between l=0 and l)to the firing list. also add the enemy from the anticlockwise list (k) and any enemies more clockwise than this enemy that are in the anticlockwise list (between k and k = anticlckwise.size)
-
-											for(int m = l; m > 0;m--)//for all values equal to l and lower - for the current object and all more anticlockwise objects in the clockwise list
-											{
-												tempFiringList.add((int)clockwise.get(m).x);//add to firing list, remember the x value of the objects in clockwise list is the enemy number, make sure to cast it to int
-											}
-											for (int n = k;n<antiClockwise.size()-1;n++)//for all values eual to k and higher - for the current enemy in anticlockwise list and all objects more clockwise than it in the anticlockwise list
-											{
-												tempFiringList.add((int)antiClockwise.get(n).x); //add those to the same list,
-											}
-										}
-										else//if the current object in the clockwise list is not in the cone then no point checking any of the other objects in the clockwise list as they are all more clockwise than the current one
-										{
-											break;
-										}
-									}
-									if(tempFiringList.size()>firingList.size())//if the tempfiring list is biggest so far then set the firng list to match the temp firing list
-									{
-										firingList=tempFiringList;
-										tempFiringList.clear();
-									}
-								}
-							}
-							else
-							{
-								//similar but for clockwise
-								Collections.sort(antiClockwise, new Comparator<PointF>() {//sort the anticlockwise list by the y value, which is the angle of the enemy,
-									@Override
-									public int compare(PointF p1, PointF p2) {
-										return Float.compare(p1.y,p2.y);
-									}
-								});
-
-								Collections.sort(clockwise, new Comparator<PointF>() {//sort the clockwise list by the y value, which is the angle of the enemy,
-									@Override
-									public int compare(PointF p1, PointF p2) {
-										return Float.compare(p1.y,p2.y);
-									}
-								});
-
-								for (int k = 0;k<clockwise.size();k++)//for all the objects in this list - starting witht the first - most anticlockwise object
-								{
-									for (int l = antiClockwise.size()-1; l >0;l--)//for all the objects in the other list - starting with the last, clockwise most object
-									{
-										if(antiClockwise.get(l).y>clockwise.get(k).y-cone*2)//if the anlge of the object in the anticlockwise list is more than the angle of the object in the clockwise list minus the firing cone, then ...
-										{//the enemy in the anticlockwise list (l) is in range, add it and all other more clockwise enemies in the anticlockwise list to the firing list. also add the enemy from the clockwise list (k) and any enemies more anticlockwise than this enemy that are in the clockwise list
-
-											for(int m = l; m<antiClockwise.size()-1;m++)//for all values equal to l and hgher - for the current object and all more clockwise objects in the anticlockwise list
-											{
-												tempFiringList.add((int)antiClockwise.get(m).x);//add to firing list, remember the x value of the objects in anticlockwise list is the enemy number, make sure to cast it to int
-											}
-											for (int n = k;n>0;n--)//for all values equal to k and lower - for the current enemy in clockwise list and all objects more anticlockwise than it in the clockwise list
-											{
-												tempFiringList.add((int)clockwise.get(n).x); //add those to the same list,
-											}
-										}
-										else//if the current object in the anticlockwise list is not in the cone then no point checking any of the other objects in the anticlockwise list as they are all more anticlockwise than the current one
-										{
-											break;
-										}
-									}
-									if(tempFiringList.size()>firingList.size())//if the tempfiring list is biggest so far then set the firng list to match the temp firing list
-									{
-										firingList=tempFiringList;
-									}
-								}
-							}
-							//shoot at firing list
-							{
-								int wholeBulletsThisFrame;
-
-
-								troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
-								wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
-								troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
-								if(troop.get(i).fireDelay<0)
-								{
-									wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
-								}
-								for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
-									for (int k = 0; k < firingList.size(); k++) {//hit each enemy in firing list
-										if (enemy.get(firingList.get(k)).health > 0) {
-											troop.get(i).fire((int) enemy.get(firingList.get(k)).position.x, (int) enemy.get(firingList.get(k)).position.y);
-											enemy.get(firingList.get(k)).hit(weapons.get(troop.get(i).weaponType).damage);
-										}
-
-									}
-									troop.get(i).ammo--;
-									troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
-								}
-								firingList.clear();
-
-							}
-
-
-								if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-										enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
-
-									troop.get(i).targetAcquired = false;
-									troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
-								}
-						}
-
-						//end of shotgun logic
-						else
+						if (weapons.get(troop.get(i).weaponType).ammoType==0)//normal bullet firing logic
 						{
-							int wholeBulletsThisFrame =0;
-							troop.get(i).bulletsThisFrame = deltaTime / weapons.get(troop.get(i).weaponType).delayBetweenShots + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
+							int wholeBulletsThisFrame;
+							troop.get(i).bulletsThisFrame = deltaTime / troop.get(i).fireDelayReset + troop.get(i).fractionalBullets;//logic for handling weapons firing faster than the frame rate
 							wholeBulletsThisFrame = (int) troop.get(i).bulletsThisFrame;
 							troop.get(i).fractionalBullets = troop.get(i).bulletsThisFrame - (float) wholeBulletsThisFrame;
 							if(troop.get(i).fireDelay<0)
 							{
 								wholeBulletsThisFrame+=1;//if one bullet was already ready to fire then increment whole bullets by one, so that it's at least one
+								troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay
 							}
 							for (int j = wholeBulletsThisFrame; j > 0; j--) {//for eah bullet
 								if (enemy.get(troop.get(i).target).alive) {//fire at the target
 									troop.get(i).fire((int) enemy.get(troop.get(i).target).position.x, (int) enemy.get(troop.get(i).target).position.y);
 									enemy.get(troop.get(i).target).hit(weapons.get(troop.get(i).weaponType).damage);
 									troop.get(i).ammo--;
-									troop.get(i).fireDelay=troop.get(i).fireDelayReset;//reset the fire delay each time you fire, cos it needs to count down from the last time you fired
 								}
 							}
 
 							//}
-							if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
-									enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
-								troop.get(i).targetAcquired = false;
-								troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
-							}
+
+						}//end of normal bullet firing
+						else if (weapons.get(troop.get(i).weaponType).ammoType==1)//shotgun bullet firing logic
+						{
+
+						}//end of shotgun firing
+						if (distanceBetween(troop.get(i).position, enemy.get(troop.get(i).target).position) > troop.get(i).range * troop.get(i).range ||
+						enemy.get(troop.get(i).target).health <= 0) {//check if target has exited range
+							troop.get(i).targetAcquired = false;
+							troop.get(i).closestEnemy = troop.get(i).range * troop.get(i).range;
 						}
-					}
+					}//end of if we have any bullets
 				}
 			}
 		}
@@ -601,7 +355,7 @@ public class GameScreen extends Screen {
 		float a,b;
 		a =p1.x-p2.x;
 		b =p1.y-p2.y;
-		float c = a*a+b*b;
+		float c = a*a+b*b;//it's more efficient to not bother finding the square root, therefore this doesn't given the distance between points, but it can still be used to try and compare different distances to see whih is smaller / larger
 		return c;
 	}
 	private void updatePaused(List<TouchEvent> touchEvents) {
