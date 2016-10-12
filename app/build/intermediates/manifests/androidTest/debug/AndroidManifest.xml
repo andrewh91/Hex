@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gmail.andrewahughes.TroopTD.test">
+    package="com.gmail.andrewahughes.Hex.test">
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.gmail.andrewahughes.TroopTD"
+                     android:targetPackage="com.gmail.andrewahughes.Hex"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.gmail.andrewahughes.TroopTD"/>
+                     android:label="Tests for com.gmail.andrewahughes.Hex"/>
 </manifest>

@@ -41,7 +41,7 @@ ADDED from AndroidManifest.xml:15:5
 		ADDED from AndroidManifest.xml:17:8
 	android:icon
 		ADDED from AndroidManifest.xml:16:8
-activity#com.gmail.andrewahughes.TroopTD.TroopTD
+activity#com.gmail.andrewahughes.Hex.Hex
 ADDED from AndroidManifest.xml:18:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:22:12
