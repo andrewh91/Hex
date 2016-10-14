@@ -21,10 +21,10 @@ public class GameScreen extends Screen {
 
 	GameState state = GameState.Ready;
 
+	int gameMode=1;
 	Map map;
 	List<Hexes> hexes = new ArrayList<Hexes>();
 	List<Point> hexPositions = new ArrayList<Point>();
-	int hexEdgeLength = 30;
 	// Variable Setup
 	// You would create game objects here.
 
@@ -58,14 +58,20 @@ public class GameScreen extends Screen {
 
 
 		// Initialize game objects here
-		map = new Map(new Rect(50,50,1230,750));
-		map.calculateTotalHexes(hexEdgeLength);
-		map.positionHexes();
+		map = new Map(new Rect(50,50,750,1230));
+		if(gameMode==1){//game mode singles
+			map.positionHexesSingle();
+		}
+		else if(gameMode==3) {
+			map.calculateTotalHexes(100);
+			map.positionHexes();
+		}
+
 		hexPositions=map.getHexPosition();
 
 		for(int i =0; i<hexPositions.size();i++)
 		{
-			hexes.add(new Hexes(hexPositions.get(i), hexEdgeLength));
+			hexes.add(new Hexes(hexPositions.get(i), map.getHexEdgeSize()));
 		}
 
 

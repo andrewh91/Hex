@@ -19,7 +19,7 @@
             android:name="com.gmail.andrewahughes.Hex.Hex"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Hex"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

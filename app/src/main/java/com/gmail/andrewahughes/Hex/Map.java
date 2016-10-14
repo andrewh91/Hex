@@ -16,6 +16,7 @@ public class Map {
     Point totalHexes;
     List<Point> hexPositions = new ArrayList<Point>();
     int hexEdgeSize;
+    int hexHeight;
     public Map(Rect newRect)
     {
         rect = newRect;
@@ -23,8 +24,9 @@ public class Map {
 
     public Point calculateTotalHexes (int newHexEdgeSize) {
         hexEdgeSize= newHexEdgeSize;
+        hexHeight = (int)1.7320508 * hexEdgeSize;
         int totalHexesAcrossWidth = (int) (rect.width() / (1.5 * hexEdgeSize));//works out how many hexagons we could fit across the width of the map
-        int totalHexesAcrossHeight = (int) (rect.height() / (1.7320508 * hexEdgeSize));//works out how many hexagons we could fit across the height of the map
+        int totalHexesAcrossHeight = (int) (rect.height() / hexHeight);//works out how many hexagons we could fit across the height of the map
         totalHexes = new Point(totalHexesAcrossWidth, totalHexesAcrossHeight);
         return totalHexes;
     }
@@ -42,6 +44,14 @@ public class Map {
             }
         }
     }
+    public void positionHexesSingle()//creates positions for just two hexes, for the 'Singles' game
+    {
+        hexEdgeSize=350;
+        hexHeight = (int)(1.7320508 * hexEdgeSize);
+        hexPositions.add(new Point(50,50));
+        hexPositions.add(new Point(50,50+hexHeight));
+    }
     public List<Point> getHexPosition(){return hexPositions;}
+    public int getHexEdgeSize(){return hexEdgeSize;}
 }
 
