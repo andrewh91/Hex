@@ -1,7 +1,9 @@
 package com.gmail.andrewahughes.Hex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,8 +23,9 @@ public class GameScreen extends Screen {
 
 	GameState state = GameState.Ready;
 
-	int gameMode=1;
+	int gameMode=3;
 	Map map;
+	SymbolsDB symbolsDB = new SymbolsDB();
 	List<Hexes> hexes = new ArrayList<Hexes>();
 	List<Point> hexPositions = new ArrayList<Point>();
 	// Variable Setup
@@ -57,13 +60,24 @@ public class GameScreen extends Screen {
 		super(game);
 
 
+		cameraOrigin = new Point();
+		cameraDrag = new Point(0, 0);
+		finger1 = new PointF(0, 0);
+		finger2 = new PointF(0, 0);
+
+		zoomOrigin = new PointF(1,1); //zoomDrag, zoomDrag2, finger1, finger2;
+		//selectBtn = new Button(1200, 10, "Select", "Marquee Select", true);
+		//cameraBtn = new Button(1200, 90, "Camera", "No camera", true);
+		// b = new Rect(100,100,100,100);
+
+
 		// Initialize game objects here
 		map = new Map(new Rect(50,50,750,1230));
 		if(gameMode==1){//game mode singles
 			map.positionHexesSingle();
 		}
 		else if(gameMode==3) {
-			map.calculateTotalHexes(100);
+			map.calculateTotalHexes(60);//argument hex edge size
 			map.positionHexes();
 		}
 
@@ -71,9 +85,12 @@ public class GameScreen extends Screen {
 
 		for(int i =0; i<hexPositions.size();i++)
 		{
-			hexes.add(new Hexes(hexPositions.get(i), map.getHexEdgeSize()));
+			hexes.add(new Hexes(hexPositions.get(i), map.getHexEdgeSize(), "hex " + i + ""));
 		}
-
+		for(int j =0; j<hexPositions.size();j++)
+		{
+			hexes.get(j).setSetID(symbolsDB.getSetID(getAdjacentSymbolID(j,hexes,map.getTotalHexes())));
+		}
 
 
 		// Defining a paint object
@@ -93,15 +110,6 @@ public class GameScreen extends Screen {
 
 		bullet = new Bullet();
 		enemyUpdate = new EnemyUpdate();
-		cameraOrigin = new Point();
-		cameraDrag = new Point(0, 0);
-		finger1 = new PointF(0, 0);
-		finger2 = new PointF(0, 0);
-
-		zoomOrigin = new PointF(1,1); //zoomDrag, zoomDrag2, finger1, finger2;
-		//selectBtn = new Button(1200, 10, "Select", "Marquee Select", true);
-		//cameraBtn = new Button(1200, 90, "Camera", "No camera", true);
-		// b = new Rect(100,100,100,100);
 		// c = new Rect();
 
 		//Data.save(game.getFileIO());
@@ -180,7 +188,7 @@ public class GameScreen extends Screen {
 				}
 				else
 				{
-				
+
 			if(disableControl==false){
 					command.startMarquee((int)((event.x - cameraDrag.x)/zoomScale), (int)((event.y
 							- cameraDrag.y)/zoomScale));
@@ -217,13 +225,13 @@ public class GameScreen extends Screen {
 					}
 				}
 				zoomScaleInitial=zoomScale;
-				
+
 				cameraMode=false;
 				if(event.noOfPointers==1)//if you lift the last finger up, we no longer control the camera and so ...
 				{
 					disableControl=false;//allow touch controls
 				}
-				
+
 
 			}
 			if (event.type == TouchEvent.TOUCH_DRAGGED) {
@@ -232,15 +240,15 @@ public class GameScreen extends Screen {
 				// c.top=event.y;
 				// c.bottom=event.y;
 				cameraControl1(event);
-				
+
 				if (event.pointer>0) {
 					disableControl=true;//if more than one finger down disable controls since we are moving the camera
 
 						command.marqueeAlive=false;//stop drawing marquee
-					
+
 					if(cameraMode==false)
 					{
-						cameraControlInitiate(event);	
+						cameraControlInitiate(event);
 					}
 					cameraControl(event);
 				} else {
@@ -377,6 +385,46 @@ public class GameScreen extends Screen {
 		b =p1.y-p2.y;
 		float c = a*a+b*b;//it's more efficient to not bother finding the square root, therefore this doesn't given the distance between points, but it can still be used to try and compare different distances to see whih is smaller / larger
 		return c;
+	}
+	public List<Integer> getAdjacentSymbolID(int i,List<Hexes> h, Point totalHexes)//the argument should use totalHexes from map class, .x is the number of columns, .y is the number of rows
+	{
+		List<Integer> array = new ArrayList<Integer>();
+		if(i %totalHexes.y!=0)//i%totalHexes.y!=0 should check if we are at the top hex in a column ( if we are at the top hex, then obviously there is no hex further up from this
+		{
+			array.add(h.get(i-1).getSetID());//adds the setID of the hex directly above the current hex
+
+			//this one depends on the parity of the column, is it odd or even?
+			//if we are not at the top of the map
+			if(i +totalHexes.y-1+  (2*(((i -1)/totalHexes.y)%2))<totalHexes.x*totalHexes.y)//totalHexes.x*totalHexes.y is the total number of hexes in the map, this tells us if we are at the right edge of the map
+			{
+				array.add(h.get(i +totalHexes.y-1+  (2*(((i -1)/totalHexes.y)%2))).getSetID());
+			}
+		}
+		if((i+totalHexes.y) <=totalHexes.x*totalHexes.y-1)//totalHexes.x*totalHexes.y-1 is the total number of hexes in the map
+		{//i+totalHexes.y should reference a hex to the right of the current hex, if that hex's number is more than the total number of hexes then we must have beenat the right edge to begin with
+			array.add(h.get(i+totalHexes.y).getSetID() );//add one of the hexes to the right of the current hex, it's either the one above and to the right of below and to the right
+		}
+		if(i %(totalHexes.y)!=totalHexes.y-1)// i %(totalHexes.y)!=totalHexes.y-1 should check if we are at the bottom hex in a column
+		{
+			array.add(h.get(i+1).getSetID());//add the hex below the current hex
+			//if we're not at the bottom of the map
+			if(i-totalHexes.y-1+(2*(((int)(i-1)/totalHexes.y)%2))  >0)//this tells us if we are at the left edge of the map, ((int)(i)/totalHexes.y) is basically the column number, we mod 2 that to find if it's odd or even
+			{
+				array.add(h.get(i -totalHexes.y-1+  (2*(((i -1)/totalHexes.y)%2))).getSetID());//-1+  (2*(((setID-1)/totalHexes.y)%2)) this subtracts 2 if the column is odd, does nothing if even
+			}
+		}
+		if(i -totalHexes.y>0)//this tells us if we are at the left edge of the map
+		{
+			array.add(h.get(i -totalHexes.y).getSetID());//add the hex to the left of the current hex
+		}
+
+
+		Set<Integer> removeDuplicates = new HashSet<Integer>();//use a set to remove duplicates
+		removeDuplicates.addAll(array);
+		array.clear();
+		array.addAll(removeDuplicates);
+
+		return array;
 	}
 	private void updatePaused(List<TouchEvent> touchEvents) {
 		int len = touchEvents.size();
