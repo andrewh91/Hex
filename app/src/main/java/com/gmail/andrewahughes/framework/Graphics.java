@@ -13,8 +13,10 @@ public interface Graphics {
 	public Image newImage(String fileName, ImageFormat format);
 	
 	public void clearScreen(int color);
-	
+
 	public void drawLine(int x, int y, int x2, int y2, int color);
+
+	public void drawLine(int x, int y, int x2, int y2, int color, float width);
 	
 	public void drawRect(int x, int y, int width, int height, int color);
 	

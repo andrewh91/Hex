@@ -1,6 +1,7 @@
 package com.gmail.andrewahughes.Hex;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +24,16 @@ public class GameScreen extends Screen {
 
 	GameState state = GameState.Ready;
 
-	int gameMode=3;
+	int gameMode=1;
 	Map map;
 	SymbolsDB symbolsDB = new SymbolsDB();
 	List<Hexes> hexes = new ArrayList<Hexes>();
 	List<Point> hexPositions = new ArrayList<Point>();
+	int symbolToCompare =6;
+	int hexToCompare =2;
+	String matchResult = "false";
+	int score[]= new int[]{0,0};
+	int latestScorer=0;
 	// Variable Setup
 	// You would create game objects here.
 
@@ -72,7 +78,8 @@ public class GameScreen extends Screen {
 
 
 		// Initialize game objects here
-		map = new Map(new Rect(50,50,750,1230));
+
+		map = new Map(new Rect(50,50,1230,750));
 		if(gameMode==1){//game mode singles
 			map.positionHexesSingle();
 		}
@@ -85,11 +92,12 @@ public class GameScreen extends Screen {
 
 		for(int i =0; i<hexPositions.size();i++)
 		{
-			hexes.add(new Hexes(hexPositions.get(i), map.getHexEdgeSize(), "hex " + i + ""));
+			hexes.add(new Hexes(hexPositions.get(i), map.getHexEdgeSize(), "hex " + i + "",cameraDrag,zoomScale));
 		}
 		for(int j =0; j<hexPositions.size();j++)
 		{
 			hexes.get(j).setSetID(symbolsDB.getSetID(getAdjacentSymbolID(j,hexes,map.getTotalHexes())));
+			hexes.get(j).setSymbolIDs(symbolsDB.getSetOf6Symbols(hexes.get(j).getSetID()));
 		}
 
 
@@ -190,8 +198,8 @@ public class GameScreen extends Screen {
 				{
 
 			if(disableControl==false){
-					command.startMarquee((int)((event.x - cameraDrag.x)/zoomScale), (int)((event.y
-							- cameraDrag.y)/zoomScale));
+					/*command.startMarquee((int)((event.x - cameraDrag.x)/zoomScale), (int)((event.y
+							- cameraDrag.y)/zoomScale));//*/
 			}
 					/*
 					 * if(no<3) { command.createTroop(event.x,event.y); no++; }
@@ -204,6 +212,17 @@ public class GameScreen extends Screen {
 
 			if (event.type == TouchEvent.TOUCH_UP) {
 
+				if(event.x<=hexes.get(0).rect.right)//the the touch point is left of the right edge of the first hex
+				{
+					symbolToCompare = hexes.get(0).touchEvent(event.x,event.y);
+					hexToCompare=0;
+				}
+				else//the the touch point is right of the first hex
+				{
+					symbolToCompare = hexes.get(1).touchEvent(event.x,event.y);
+					hexToCompare=1;
+				}
+				compareMatch( symbolToCompare,hexToCompare  );
 				// button logic
 				// if we touch a button do nothing, but if touch up event is
 				// also on button then press button
@@ -270,7 +289,30 @@ public class GameScreen extends Screen {
 		// This is where all the game updates happen.
 		// For example, robot.update();
 	}
+	private void compareMatch(int symbol,int hex)
+	{
+		int otherHex= (hex+1)%2;
+		if(symbol<6)
+		{
 
+			if(Arrays.asList(hexes.get(otherHex).symbolIDs).contains(Integer.valueOf(hexes.get(hex).symbolIDs[symbol])))
+			{
+				matchResult = "true";
+				score[hex]++;
+				latestScorer=hex;
+
+				for(int j =0; j<hexPositions.size();j++)
+				{
+					hexes.get(j).setSetID(symbolsDB.getSetID(getAdjacentSymbolID(j,hexes,map.getTotalHexes())));
+					hexes.get(j).setSymbolIDs(symbolsDB.getSetOf6Symbols(hexes.get(j).getSetID()));
+				}
+			}
+			else
+			{
+				matchResult = "false";
+			}
+		}
+	}
 	private void troopInteractionUpdate(List<Troop>troop,List<Enemy>enemy ,List<Weapon> weapons,float deltaTime) {
 		//collision detection quad tree////////////////////
 		quad.clear();
@@ -463,7 +505,8 @@ public class GameScreen extends Screen {
 		Graphics g = game.getGraphics();
 			// g.drawRect(0, 0, 1280, 800, Color.argb(255, 153, 217,
 		// 234));//cornflower blue :)
-		g.drawARGB(255, 153, 217, 234);// another way to draw a blue background
+		//g.drawARGB(255, 153, 217, 234);// another way to draw a blue background
+		g.drawARGB(255, 153, 217*latestScorer, 234*latestScorer);// another way to draw a blue background
 
 		for (int i = 0; i<hexPositions.size();i++)
 		{
@@ -472,12 +515,13 @@ public class GameScreen extends Screen {
 		//g.drawRect(new Rect((int)(map.rect.left*zoomScale+cameraDrag.x),(int)(map.rect.top*zoomScale+cameraDrag.y),
 		//		(int)(map.rect.right*zoomScale+cameraDrag.x),(int)(map.rect.bottom*zoomScale+cameraDrag.y)),Color.argb(100,255,100,100));
 
-		command.paint(g, cameraDrag, zoomScale);
-		enemyUpdate.paint(g, cameraDrag, zoomScale);
-		quad.paint(g,cameraDrag,zoomScale);
+		//command.paint(g, cameraDrag, zoomScale);
+		//enemyUpdate.paint(g, cameraDrag, zoomScale);
+		//quad.paint(g,cameraDrag, zoomScale);
 
 		g.drawString(text, 10, 30, blackText);
 		g.drawString(text1, 10, 60, blackText);
+		g.drawString(matchResult+ " player 1 score; "+score[0]+" player 2 score; "+score[1],50,750,blackText);
 		//g.drawString(" "+ Data.highscores[0]+"  "+ Data.currentLevel, 50, 90, blackText);
 		// Secondly, draw the UI above the game elements.
 		if (state == GameState.Ready)
@@ -586,14 +630,14 @@ public class GameScreen extends Screen {
 		
 	}
 	public void cameraControl1(TouchEvent event)
-	{
+	{/*
 		if(event.pointer==0)
 		{
 			finger1 = new PointF(event.x,event.y);
-		}
+		}//*/
 	}
 	public void cameraControl(TouchEvent event)
-	{
+	{/*
 	if(event.pointer==1)
 	{
 		finger2 = new PointF(event.x,event.y);
@@ -623,5 +667,6 @@ public class GameScreen extends Screen {
 	
 	cameraDrag = new Point(	(int) ((finger1.x+finger2.x)/2 - cameraOrigin.x),
 							(int) ((finger1.y+finger2.y)/2 - cameraOrigin.y));
+	//*/
 	}
 }

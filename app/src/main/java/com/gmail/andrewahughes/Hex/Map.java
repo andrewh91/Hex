@@ -17,6 +17,7 @@ public class Map {
     List<Point> hexPositions = new ArrayList<Point>();
     int hexEdgeSize;
     int hexHeight;
+    int border;
     public Map(Rect newRect)
     {
         rect = newRect;
@@ -46,10 +47,13 @@ public class Map {
     }
     public void positionHexesSingle()//creates positions for just two hexes, for the 'Singles' game
     {
-        hexEdgeSize=350;
+        border = rect.height()/20;
+        hexEdgeSize=(rect.height()-(2*rect.height()/20))/2;
         hexHeight = (int)(1.7320508 * hexEdgeSize);
-        hexPositions.add(new Point(50,50));
-        hexPositions.add(new Point(50,50+hexHeight));
+        hexPositions.add(new Point(border,border));
+        hexPositions.add(new Point(border+hexHeight,border));
+        totalHexes= new Point(1,2);
+
     }
     public List<Point> getHexPosition(){return hexPositions;}
     public int getHexEdgeSize(){return hexEdgeSize;}

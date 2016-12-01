@@ -94,6 +94,13 @@ public class AndroidGraphics implements Graphics {
 		canvas.drawLine(x, y, x2, y2, paint);
 	}
 	@Override
+	public void drawLine(int x, int y, int x2, int y2, int color, float w){
+		paint.setColor(color);
+		paint.setStrokeWidth(w);
+		paint.setStrokeCap(Paint.Cap.ROUND);
+		canvas.drawLine(x, y, x2, y2, paint);
+	}
+	@Override
 	public void drawRect(int x,int y, int width, int height, int color){
 		paint.setColor(color);
 		paint.setStyle(Style.FILL);
@@ -140,6 +147,7 @@ public class AndroidGraphics implements Graphics {
 	}
 	@Override
 	public void drawString(String text, int x, int y, Paint paint){
+
 		canvas.drawText(text, x, y, paint);
 	}
 	public void drawImage(Image Image, int x, int y, int srcX, int srcY,int srcWidth,int srcHeight){
